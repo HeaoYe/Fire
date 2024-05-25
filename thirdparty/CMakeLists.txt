@@ -1,0 +1,5 @@
+option(SPDLOG_BUILD_ALL "Build all artifacts" OFF)
+option(SPDLOG_BUILD_SHARED "Build shared library" OFF)
+option(SPDLOG_ENABLE_PCH "Build static or shared library using precompiled header to speed up compilation time" OFF)
+option(SPDLOG_BUILD_PIC "Build position independent code (-fPIC)" OFF)
+add_subdirectory(spdlog)
