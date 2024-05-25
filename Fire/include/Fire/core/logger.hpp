@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Fire/macros.hpp>
+#include <Fire/core/macros.hpp>
 #include <spdlog/spdlog.h>
 
 namespace Fire {
