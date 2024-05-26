@@ -8,4 +8,9 @@ namespace Fire {
     void Task::wait() const {
         completed_flag.wait(false);
     }
+
+    void Task::reset() {
+        wait();
+        completed_flag.clear();
+    }
 }

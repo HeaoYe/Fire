@@ -8,28 +8,32 @@ int main() {
         FIRE_INFO("Task Test");
     });
     auto *p1 = new Fire::Task([]() {
-        for (int i = 0; i < 10; i ++) {
-            FIRE_INFO("Task Test 1 {}", i)
+        for (int i = 0; i < 100; i ++) {
+            volatile float d;
+            for (int j = 0; j < 20000; j ++) {
+                d = std::min(0.999999, std::max(acos(i / 1001.f) / sqrt(sqrt(sqrt(exp(acos(i / 1001.f))))) / exp(sin(i) / cos(i) / acos(i / 1001.f) * sin(i)), 0.00001));
+            }
+            FIRE_INFO("Task Test 1 {}", d)
         }
     });
     auto *p2 = new Fire::Task([]() {
-        for (int i = 0; i < 1000; i ++) {
-            FIRE_INFO("Task Test 2 {}", i)
+        for (int i = 0; i < 100; i ++) {
+            volatile float d;
+            for (int j = 0; j < 20000; j ++) {
+                d = std::min(0.999999, std::max(acos(i / 1001.f) / sqrt(sqrt(sqrt(exp(acos(i / 1001.f))))) / exp(sin(i) / cos(i) / acos(i / 1001.f) * sin(i)), 0.00001));
+            }
+            FIRE_INFO("Task Test 2 {}", d)
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     });
     tp->addTask(p);
-    auto ps = std::vector<Fire::TaskPtr>({p1, p2});
+    auto ps = std::vector<Fire::TaskPtr>({ p1, p2 });
     tp->addTasks(ps);
     p2->wait();
     p2->wait();
+    p2->reset();
+    tp->addTask(p2);
     FIRE_WARN("AAAA")
     delete tp;
-
-    struct A {};
-    Fire::LockFreeQueue<A> tq;
-    tq.enqueue(A {});
-    auto a = tq.dequeue();
 
     FIRE_WARN("HHH")
     FIRE_WARN("HHH")

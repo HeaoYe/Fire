@@ -24,28 +24,19 @@ namespace Fire {
     }
 
     ThreadPool::~ThreadPool() {
-        enqueue_lock = true;
-        while (pending_tasks.size()) {}
+        pending_tasks.quit();
+        pending_tasks.wait();
         is_alive = false;
-        for (int i = 0; i < threads.size(); i++) {
-            pending_tasks.enqueue(nullptr);
-        }
         for (auto &thread : threads) {
             thread.join();
         }
     }
 
     void ThreadPool::addTask(TaskPtr task) {
-        if (enqueue_lock) {
-            return;
-        }
         pending_tasks.enqueue(task);
     }
 
     void ThreadPool::addTasks(std::span<TaskPtr> tasks) {
-        if (enqueue_lock) {
-            return;
-        }
         pending_tasks.enqueue(tasks);
     }
 }

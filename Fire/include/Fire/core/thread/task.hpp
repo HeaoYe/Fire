@@ -16,8 +16,8 @@ namespace Fire {
         }
 
         bool isCompleted() const;
-
         void wait() const;
+        void reset();
     private:
         std::function<void ()> callback;
         mutable std::atomic_flag completed_flag {};
