@@ -47,7 +47,7 @@ int main() {
     Fire::Task::FreeTask(p);
     Fire::Task::FreeTask(p1);
     Fire::Task::FreeTask(p2);
-    // Fire::Task::FreeTask(pf);
+    Fire::Task::FreeTask(pf);
 
     FIRE_WARN("HHH")
     FIRE_WARN("HHH")
