@@ -20,6 +20,10 @@ target_include_directories(Fire PRIVATE include/Fire)
 
 target_link_libraries(Fire PUBLIC spdlog)
 
+if (FIRE_DEBUG_MODE)
+    target_compile_definitions(Fire PUBLIC FIRE_DEBUG_MODE)
+endif()
+
 if (WIN32)
     target_compile_definitions(Fire PUBLIC FIRE_PLATFORM_WINDOWS)
     if (FIRE_BUILD_SHARED)
