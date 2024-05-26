@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Fire/core/macros.hpp>
 #include <Fire/core/thread/task.hpp>
 #include <Fire/core/thread/lock_free_queue.hpp>
 #include <thread>
@@ -11,10 +12,10 @@ namespace Fire {
     private:
         static void WorkerThreadFunc(ThreadPool *master);
     public:
-        ThreadPool(uint32_t thread_count = 0);
-        ~ThreadPool();
-        void addTask(TaskPtr task);
-        void addTasks(std::span<TaskPtr> tasks);
+        FIRE_API ThreadPool(uint32_t thread_count = 0);
+        FIRE_API ~ThreadPool();
+        FIRE_API void addTask(TaskPtr task);
+        FIRE_API void addTasks(std::span<TaskPtr> tasks);
         uint32_t getWorkingThreadCount() const { return working_thread_count.load(); }
         uint32_t getThreadCount() const { return threads.size(); }
     private:

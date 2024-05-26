@@ -22,6 +22,9 @@ namespace Fire {
         }
 
         void enqueue(std::span<T> elements) {
+            if (elements.empty()) {
+                return;
+            }
             if (quited_flag.test()) {
                 return;
             }

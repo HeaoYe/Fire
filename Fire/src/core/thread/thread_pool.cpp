@@ -6,7 +6,9 @@ namespace Fire {
             TaskPtr task = master->pending_tasks.dequeue();
             if (task) {
                 master->working_thread_count.fetch_add(1);
+                task->running_flag.test_and_set();
                 task->callback();
+                task->running_flag.clear();
                 master->working_thread_count.fetch_sub(1);
                 task->completed_flag.test_and_set();
                 task->completed_flag.notify_all();
@@ -34,9 +36,13 @@ namespace Fire {
 
     void ThreadPool::addTask(TaskPtr task) {
         pending_tasks.enqueue(task);
+        addTasks(task->subtasks);
     }
 
     void ThreadPool::addTasks(std::span<TaskPtr> tasks) {
         pending_tasks.enqueue(tasks);
+        for (TaskPtr task : tasks) {
+            addTasks(task->subtasks);
+        }
     }
 }
