@@ -49,16 +49,10 @@ int main() {
     Fire::Task::FreeTask(p2);
     Fire::Task::FreeTask(pf);
 
-    Fire::Point2r point1 { 3, 2 };
-    Fire::Point2r point2 { 1, 2 };
-    auto point3 = point1 + point2;
-    FIRE_WARN("{} {}", point3.x, point3.y)
-
-    Fire::Vector3r vector1 { 2, 4.2, 1.2 };
-    Fire::Vector3r vector2 { 1.2, -.2, 3.2};
-    auto vector3 = Fire::Real(3) * vector1 * vector2;
-    FIRE_WARN("{} {} {}", vector3.x, vector3.y, vector3.z)
-
+    FIRE_WARN("HHH")
+    FIRE_WARN("HHH")
+    Fire::SetLogLevel(spdlog::level::err);
+    FIRE_WARN("HHH")
     Fire::Logger::Destory();
     return 0;
 }
