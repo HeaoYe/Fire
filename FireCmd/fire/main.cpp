@@ -49,10 +49,14 @@ int main() {
     Fire::Task::FreeTask(p2);
     Fire::Task::FreeTask(pf);
 
-    FIRE_WARN("HHH")
-    FIRE_WARN("HHH")
-    Fire::SetLogLevel(spdlog::level::err);
-    FIRE_WARN("HHH")
+    Fire::Vector<float, 2> vec1 { 0, 2 };
+    Fire::Vector<float, 2> vec2 { 1, 3 };
+    auto vec3 = vec1 - vec2;
+    vec3 *= 2.2;
+    auto vec4 = -vec2;
+    FIRE_WARN("{} {} {}", vec3[0], vec3[1], Dot(vec3, vec4))
+    FIRE_WARN("{} {}", Fire::Sqrt(-1.f), Fire::SafeSqrt(-1.f))
+
     Fire::Logger::Destory();
     return 0;
 }

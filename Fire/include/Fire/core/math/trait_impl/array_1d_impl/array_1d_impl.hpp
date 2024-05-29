@@ -1,0 +1,19 @@
+#pragma once
+
+#include <Fire/core/math/trait_impl/array_1d_impl/add_impl.hpp>
+#include <Fire/core/math/trait_impl/array_1d_impl/mul_impl.hpp>
+#include <Fire/core/math/trait_impl/array_1d_impl/scalar_mul_impl.hpp>
+#include <Fire/core/math/trait_impl/array_1d_impl/metric_impl.hpp>
+#include <Fire/core/math/trait_impl/array_1d_impl/norm_impl.hpp>
+#include <Fire/core/math/trait_impl/array_1d_impl/inner_product_impl.hpp>
+
+namespace Fire {
+    struct Array1DImpl {
+        DEFINE_TRAIT_IMPL(Add, Array1DAddTraitImpl);
+        DEFINE_TRAIT_IMPL(Mul, Array1DMulTraitImpl);
+        DEFINE_TRAIT_IMPL(ScalarMul, Array1DScalarMulTraitImpl);
+        DEFINE_TRAIT_IMPL(Metric, Array1DMetricTraitImpl);
+        DEFINE_TRAIT_IMPL(Norm, Array1DNormTraitImpl);
+        DEFINE_TRAIT_IMPL(InnerProduct, Array1DInnerProductTraitImpl);
+    };
+}
