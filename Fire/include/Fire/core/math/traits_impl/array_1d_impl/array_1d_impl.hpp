@@ -1,11 +1,11 @@
 #pragma once
 
-#include <Fire/core/math/trait_impl/array_1d_impl/add_impl.hpp>
-#include <Fire/core/math/trait_impl/array_1d_impl/mul_impl.hpp>
-#include <Fire/core/math/trait_impl/array_1d_impl/scalar_mul_impl.hpp>
-#include <Fire/core/math/trait_impl/array_1d_impl/metric_impl.hpp>
-#include <Fire/core/math/trait_impl/array_1d_impl/norm_impl.hpp>
-#include <Fire/core/math/trait_impl/array_1d_impl/inner_product_impl.hpp>
+#include <Fire/core/math/traits_impl/array_1d_impl/add_impl.hpp>
+#include <Fire/core/math/traits_impl/array_1d_impl/mul_impl.hpp>
+#include <Fire/core/math/traits_impl/array_1d_impl/scalar_mul_impl.hpp>
+#include <Fire/core/math/traits_impl/array_1d_impl/metric_impl.hpp>
+#include <Fire/core/math/traits_impl/array_1d_impl/norm_impl.hpp>
+#include <Fire/core/math/traits_impl/array_1d_impl/inner_product_impl.hpp>
 
 namespace Fire {
     struct Array1DImpl {

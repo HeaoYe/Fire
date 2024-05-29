@@ -7,7 +7,7 @@ namespace Fire {
     public:
         ENABLE_IF_IMPL_TRAIT(Metric, Real, static) DistanceSqua(const T &lhs, const T &rhs) {
             Real result { 0 };
-            for (decltype(T::Dims) i { 0 }; i < T::Dims; i ++) {
+            for (SizeT i = 0; i < T::Dims; i ++) {
                 result += Squa(lhs[i] - rhs[i]);
             }
             return result;

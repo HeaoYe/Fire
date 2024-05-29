@@ -9,4 +9,5 @@ namespace Fire {
     using Real = float;
 #endif
     using Int = int32_t;
+    using SizeT = size_t;
 }

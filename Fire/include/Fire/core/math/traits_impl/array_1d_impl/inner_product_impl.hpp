@@ -7,7 +7,7 @@ namespace Fire {
     public:
         ENABLE_IF_IMPL_TRAIT(InnerProduct, Real, static) Dot(const T &lhs, const T &rhs) {
             Real result { 0 };
-            for (std::remove_const_t<decltype(T::Dims)> i { 0 }; i < T::Dims; i ++) {
+            for (SizeT i = 0; i < T::Dims; i ++) {
                 result += lhs[i] * rhs[i];
             }
             return result;
