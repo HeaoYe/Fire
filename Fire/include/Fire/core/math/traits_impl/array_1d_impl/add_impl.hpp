@@ -6,15 +6,15 @@
 namespace Fire {
     class Array1DAddTraitImpl {
     public:
-        ENABLE_IF_IMPL_TRAIT(Add, T, static) OpAdd(const T &lhs, const T &rhs) {
+        TRAIT_API(Add) static T OpAdd(const T &lhs, const T &rhs) {
             return InternalOpAdd(lhs, rhs. T::IndexSequence);
         }
 
-        ENABLE_IF_IMPL_TRAIT(Add, T, static) OpSub(const T &lhs, const T &rhs) {
+        TRAIT_API(Add) static T OpSub(const T &lhs, const T &rhs) {
             return InternalOpSub(lhs, rhs, T::IndexSequence);
         }
 
-        ENABLE_IF_IMPL_TRAIT(Add, T, static) OpOpposite(const T &rhs) {
+        TRAIT_API(Add) static T OpOpposite(const T &rhs) {
             return InternalOpOpposite(rhs, T::IndexSequence);
         }
     private:

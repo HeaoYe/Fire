@@ -6,7 +6,7 @@
 namespace Fire {
     DEFINE_TRAIT(EuclideanV)
 
-    ENABLE_IF_IMPL_TRAIT_WITH_CONDITIONS(EuclideanV, T, (EQUAL<SizeT, T::Dims, 3>)) Cross(const T &lhs, const T &rhs) {
+    TRAIT_API_WITH_CONDITIONS(EuclideanV, T::Dims == 3, T) Cross(const T &lhs, const T &rhs) {
         return INVOKE_TRAIT_IMPL(EuclideanV, Cross, lhs, rhs);
     }
 }

@@ -5,6 +5,7 @@
 
 #define __TRAIT_NAME(NAME) NAME##TraitEnable
 #define __TRAIT_REQUIRE_NAME(NAME) NAME##TraitRequiresSatisfy
+#define __TRAIT_CONCEPT_NAME(NAME) Concept##NAME
 
 #define DEFINE_TRAIT(NAME, ...) \
 template <class T> \
@@ -15,11 +16,8 @@ template <class T> \
 struct __TRAIT_REQUIRE_NAME(NAME) { \
     constexpr static bool value = std::conjunction_v<__VA_ARGS__>; \
 }; \
-
-template <class T, T value1, T value2>
-struct EQUAL {
-    constexpr static bool value = value1 == value2;
-};
+template <class T> \
+concept __TRAIT_CONCEPT_NAME(NAME) = __TRAIT_NAME(NAME) <T>::value; \
 
 #define REQUIRE_TRAIT(NAME)  __TRAIT_NAME(NAME)<T>
 
@@ -31,12 +29,10 @@ struct __TRAIT_NAME(NAME)<__VA_ARGS__> { \
 #define DEFINE_TRAIT_IMPL(NAME, IMPL_NAME) using __TRAIT_NAME(NAME) = IMPL_NAME
 #define DEFINE_IMPL(IMPL_NAME) using __Impl = IMPL_NAME
 
-#define ENABLE_IF_IMPL_TRAIT(NAME, Y, ...) \
-template <class T> \
-__VA_ARGS__ std::enable_if_t<__TRAIT_NAME(NAME)<T>::value, Y> \
+#define TRAIT_API(NAME) \
+template <__TRAIT_CONCEPT_NAME(NAME) T> \
 
-#define ENABLE_IF_IMPL_TRAIT_WITH_CONDITIONS(NAME, Y, CONDITIONS, ...) \
-template <class T> \
-__VA_ARGS__ std::enable_if_t<std::conjunction_v<__TRAIT_NAME(NAME)<T>, REMOVE_OPTIONAL_PARENS(CONDITIONS)>, Y> \
+#define TRAIT_API_WITH_CONDITIONS(NAME, CONDITION, Y, ...) \
+TRAIT_API(NAME) __VA_ARGS__ std::enable_if_t<CONDITION, Y> \
 
 #define INVOKE_TRAIT_IMPL(NAME, Func, ...) T::__Impl::__TRAIT_NAME(NAME)::Func(__VA_ARGS__)

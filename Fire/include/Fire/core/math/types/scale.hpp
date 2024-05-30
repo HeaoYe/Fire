@@ -29,22 +29,22 @@ namespace Fire {
         return T { (lhs.template get<Indices>() * rhs.template get<Indices>())... };
     }
 
-    ENABLE_IF_IMPL_TRAIT(ScalarMul, T) operator*(const T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
+    TRAIT_API(ScalarMul) T operator*(const T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
         return __InternalOpScaleMul(lhs, rhs, T::IndexSequence);
     }
 
-    ENABLE_IF_IMPL_TRAIT(ScalarMul, T) operator*(const Scale<typename T::Scalar, T::Dims> &lhs, const T &rhs) {
+    TRAIT_API(ScalarMul) T operator*(const Scale<typename T::Scalar, T::Dims> &lhs, const T &rhs) {
         return __InternalOpScaleMul(rhs, lhs, T::IndexSequence);
     }
-    ENABLE_IF_IMPL_TRAIT(ScalarMul, void) operator*=(T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
+    TRAIT_API(ScalarMul) void operator*=(T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
         lhs = lhs * rhs;
     }
 
-    ENABLE_IF_IMPL_TRAIT(ScalarMul, T) operator/(const T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
+    TRAIT_API(ScalarMul) T operator/(const T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
         return __InternalOpScaleMul(lhs, Inverse(rhs), T::IndexSequence);
     }
 
-    ENABLE_IF_IMPL_TRAIT(ScalarMul, void) operator/=(T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
+    TRAIT_API(ScalarMul) void operator/=(T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
         lhs = lhs / rhs;
     }
 }

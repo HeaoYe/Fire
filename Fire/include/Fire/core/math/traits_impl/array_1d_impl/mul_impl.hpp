@@ -6,19 +6,19 @@
 namespace Fire {
     class Array1DMulTraitImpl {
     public:
-        ENABLE_IF_IMPL_TRAIT(Mul, T, static) OpMul(const T &lhs, const T &rhs) {
+        TRAIT_API(Mul) static T OpMul(const T &lhs, const T &rhs) {
             return InternalOpScalarMul(lhs, rhs, T::IndexSequence);
         }
 
-        ENABLE_IF_IMPL_TRAIT(Mul, T, static) OpDiv(const T &lhs, const T &rhs) {
+        TRAIT_API(Mul) static T OpDiv(const T &lhs, const T &rhs) {
             return InternalOpDiv(lhs, rhs, T::IndexSequence);
         }
 
-        ENABLE_IF_IMPL_TRAIT(Mul, T, static) Inverse(const T &rhs) {
+        TRAIT_API(Mul) static T Inverse(const T &rhs) {
             return InternalInverse(rhs, T::IndexSequence);
         }
 
-        ENABLE_IF_IMPL_TRAIT(Mul, void, static) InverseSelf(T &rhs) {
+        TRAIT_API(Mul) static void InverseSelf(T &rhs) {
             for (SizeT i = 0; i < T::Dims; i ++) {
                 rhs.set(i, (typename T::Scalar { 1 }) / rhs.get(i));
             }

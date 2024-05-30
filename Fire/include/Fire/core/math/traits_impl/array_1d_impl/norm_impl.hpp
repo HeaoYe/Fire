@@ -5,7 +5,7 @@
 namespace Fire {
     class Array1DNormTraitImpl {
     public:
-        ENABLE_IF_IMPL_TRAIT(Norm, Real, static) OneNorm(const T &rhs) {
+        TRAIT_API(Norm) static Real OneNorm(const T &rhs) {
             Real result { 0 };
             for (SizeT i = 0; i < T::Dims; i ++) {
                 result += rhs.get(i);
@@ -13,7 +13,7 @@ namespace Fire {
             return result;
         }
 
-        ENABLE_IF_IMPL_TRAIT(Norm, Real, static) TwoNorm(const T &rhs) {
+        TRAIT_API(Norm) static Real TwoNorm(const T &rhs) {
             Real result { 0 };
             for (SizeT i = 0; i < T::Dims; i ++) {
                 result += rhs.get(i) * rhs.get(i);

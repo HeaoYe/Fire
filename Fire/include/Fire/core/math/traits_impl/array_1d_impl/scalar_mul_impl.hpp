@@ -6,11 +6,11 @@
 namespace Fire {
     class Array1DScalarMulTraitImpl {
     public:
-        ENABLE_IF_IMPL_TRAIT(ScalarMul, T, static) OpScalarMul(const T &lhs, typename T::Scalar rhs) {
+        TRAIT_API(ScalarMul) static T OpScalarMul(const T &lhs, typename T::Scalar rhs) {
             return InternalOpScalarMul(lhs, rhs, T::IndexSequence);
         }
 
-        ENABLE_IF_IMPL_TRAIT(ScalarMul, T, static) OpScalarDiv(const T &lhs, typename T::Scalar rhs) {
+        TRAIT_API(ScalarMul) static T OpScalarDiv(const T &lhs, typename T::Scalar rhs) {
             return InternalOpScalarMul(lhs, (typename T::Scalar { 1 }) / rhs, T::IndexSequence);
         }
     private:
