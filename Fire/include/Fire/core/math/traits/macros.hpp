@@ -16,6 +16,11 @@ struct __TRAIT_REQUIRE_NAME(NAME) { \
     constexpr static bool value = std::conjunction_v<__VA_ARGS__>; \
 }; \
 
+template <class T, T value1, T value2>
+struct EQUAL {
+    constexpr static bool value = value1 == value2;
+};
+
 #define REQUIRE_TRAIT(NAME)  __TRAIT_NAME(NAME)<T>
 
 #define IMPL_TRAIT(NAME, ...) \
@@ -29,5 +34,9 @@ struct __TRAIT_NAME(NAME)<__VA_ARGS__> { \
 #define ENABLE_IF_IMPL_TRAIT(NAME, Y, ...) \
 template <class T> \
 __VA_ARGS__ std::enable_if_t<__TRAIT_NAME(NAME)<T>::value, Y> \
+
+#define ENABLE_IF_IMPL_TRAIT_WITH_CONDITIONS(NAME, Y, CONDITIONS, ...) \
+template <class T> \
+__VA_ARGS__ std::enable_if_t<std::conjunction_v<__TRAIT_NAME(NAME)<T>, REMOVE_OPTIONAL_PARENS(CONDITIONS)>, Y> \
 
 #define INVOKE_TRAIT_IMPL(NAME, Func, ...) T::__Impl::__TRAIT_NAME(NAME)::Func(__VA_ARGS__)

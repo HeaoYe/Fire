@@ -29,4 +29,7 @@ namespace Fire {
 
     template <ConceptArithmetic T, size_t N>
     IMPL_TRAIT(InnerProduct, Vector<T, N>)
+
+    template <ConceptArithmetic T, size_t N>
+    IMPL_TRAIT(EuclideanV, Vector<T, N>)
 }

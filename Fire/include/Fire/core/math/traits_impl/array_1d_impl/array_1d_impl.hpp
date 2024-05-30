@@ -6,6 +6,7 @@
 #include <Fire/core/math/traits_impl/array_1d_impl/metric_impl.hpp>
 #include <Fire/core/math/traits_impl/array_1d_impl/norm_impl.hpp>
 #include <Fire/core/math/traits_impl/array_1d_impl/inner_product_impl.hpp>
+#include <Fire/core/math/traits_impl/array_1d_impl/euclidean_v_impl.hpp>
 
 namespace Fire {
     struct Array1DImpl {
@@ -15,5 +16,6 @@ namespace Fire {
         DEFINE_TRAIT_IMPL(Metric, Array1DMetricTraitImpl);
         DEFINE_TRAIT_IMPL(Norm, Array1DNormTraitImpl);
         DEFINE_TRAIT_IMPL(InnerProduct, Array1DInnerProductTraitImpl);
+        DEFINE_TRAIT_IMPL(EuclideanV, Array1DEuclideanVTraitImpl);
     };
 }
