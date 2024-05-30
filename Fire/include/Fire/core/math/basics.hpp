@@ -1,10 +1,18 @@
 #pragma once
 
 #include <Fire/core/concepts.hpp>
-#include <Fire/core/math/types.hpp>
+#include <cstdint>
 #include <cmath>
 
 namespace Fire {
+#if defined (FIRE_USE_DOUBLE_AS_FLOAT)
+    using Real = double;
+#else
+    using Real = float;
+#endif
+    using Int = int32_t;
+    using SizeT = size_t;
+
     template <ConceptArithmetic T>
     T Sqrt(T value) {
         return std::sqrt(value);

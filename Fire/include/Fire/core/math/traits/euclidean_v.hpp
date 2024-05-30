@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Fire/core/math/types.hpp>
+#include <Fire/core/math/basics.hpp>
 #include <Fire/core/math/traits/macros.hpp>
 
 namespace Fire {

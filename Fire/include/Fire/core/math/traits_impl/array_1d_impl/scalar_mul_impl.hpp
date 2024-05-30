@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Fire/core/math/basics.hpp>
 #include <Fire/core/math/traits/scalar_mul.hpp>
 
 namespace Fire {
@@ -13,7 +14,7 @@ namespace Fire {
             return InternalOpScalarMul(lhs, (typename T::Scalar { 1 }) / rhs, T::IndexSequence);
         }
     private:
-        template <class T, size_t ...Indices>
+        template <class T, SizeT ...Indices>
         static T InternalOpScalarMul(const T &lhs, typename T::Scalar rhs, std::index_sequence<Indices...>) {
             return T { (lhs.template get<Indices>() * rhs)... };
         }

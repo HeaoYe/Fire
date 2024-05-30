@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Fire/core/concepts.hpp>
-#include <Fire/core/math/types.hpp>
+#include <Fire/core/math/basics.hpp>
 #include <Fire/core/math/storage/macros.hpp>
 #include <Fire/core/math/traits_impl/array_1d_impl/array_1d_impl.hpp>
 

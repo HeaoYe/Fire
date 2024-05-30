@@ -54,7 +54,19 @@ int main() {
     auto vec3 = vec1 - vec2;
     vec3 *= 2.2;
     auto vec4 = -vec2;
-    FIRE_WARN("{} {} {}", vec3[0], vec3[1], Dot(vec3, vec4))
+    FIRE_WARN("{} {} {}", vec3.get(0), vec3.get(1), Dot(vec3, vec4))
+    Fire::Vector<float, 3> vec1_3 { 0, 2 };
+    Fire::Vector<float, 3> vec2_3 { 1, 3 };
+
+    Fire::Scale<float, 3> scale3 { 1, 2, 2 };
+    // Cross(vec1, vec2);   // error
+    auto vec3_3 = Cross(vec1_3, vec2_3) / scale3;
+    auto vec4_3 = Cross(vec2_3, vec1_3);
+    FIRE_WARN("{} {} {}", vec3_3.get(0), vec3_3.get(1), vec3_3.get(2))
+    FIRE_WARN("{} {} {}", vec4_3.get(0), vec4_3.get(1), vec4_3.get(2))
+
+    Fire::Point<float, 3> point { 2, 1, 1 };
+    point *= scale3;
     FIRE_WARN("{} {}", Fire::Sqrt(-1.f), Fire::SafeSqrt(-1.f))
 
     Fire::Logger::Destory();

@@ -1,35 +1,31 @@
 #pragma once
 
 #include <Fire/core/math/storage/storage_array_1d.hpp>
-#include <Fire/core/math/traits/add.hpp>
-#include <Fire/core/math/traits/mul.hpp>
-#include <Fire/core/math/traits/scalar_mul.hpp>
-#include <Fire/core/math/traits/ring.hpp>
 
 namespace Fire {
     template <ConceptArithmetic T, size_t N>
-    struct Vector : public StorageArray1D<T, N> {
+    struct Normal : public StorageArray1D<T, N> {
         DEFINE_STORAGE_ARRAY_1D(StorageArray1D<T, N>)
     };
 
     template <ConceptArithmetic T, size_t N>
-    IMPL_TRAIT(Add, Vector<T, N>)
+    IMPL_TRAIT(Add, Normal<T, N>)
 
     template <ConceptArithmetic T, size_t N>
-    IMPL_TRAIT(ScalarMul, Vector<T, N>)
+    IMPL_TRAIT(ScalarMul, Normal<T, N>)
 
     template <ConceptArithmetic T, size_t N>
-    IMPL_TRAIT(Linear, Vector<T, N>)
+    IMPL_TRAIT(Linear, Normal<T, N>)
 
     template <ConceptArithmetic T, size_t N>
-    IMPL_TRAIT(Metric, Vector<T, N>)
+    IMPL_TRAIT(Metric, Normal<T, N>)
 
     template <ConceptArithmetic T, size_t N>
-    IMPL_TRAIT(Norm, Vector<T, N>)
+    IMPL_TRAIT(Norm, Normal<T, N>)
 
     template <ConceptArithmetic T, size_t N>
-    IMPL_TRAIT(InnerProduct, Vector<T, N>)
+    IMPL_TRAIT(InnerProduct, Normal<T, N>)
 
     template <ConceptArithmetic T, size_t N>
-    IMPL_TRAIT(EuclideanV, Vector<T, N>)
+    IMPL_TRAIT(EuclideanV, Normal<T, N>)
 }
