@@ -7,7 +7,7 @@ namespace Fire {
     class Array1DAddTraitImpl {
     public:
         TRAIT_API(Add) static T OpAdd(const T &lhs, const T &rhs) {
-            return InternalOpAdd(lhs, rhs. T::IndexSequence);
+            return InternalOpAdd(lhs, rhs, T::IndexSequence);
         }
 
         TRAIT_API(Add) static T OpSub(const T &lhs, const T &rhs) {

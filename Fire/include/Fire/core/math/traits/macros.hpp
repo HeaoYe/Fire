@@ -29,10 +29,10 @@ struct __TRAIT_NAME(NAME)<__VA_ARGS__> { \
 #define DEFINE_TRAIT_IMPL(NAME, IMPL_NAME) using __TRAIT_NAME(NAME) = IMPL_NAME
 #define DEFINE_IMPL(IMPL_NAME) using __Impl = IMPL_NAME
 
-#define TRAIT_API(NAME) \
-template <__TRAIT_CONCEPT_NAME(NAME) T> \
+#define TRAIT_API(NAME, ...) \
+template <__TRAIT_CONCEPT_NAME(NAME) T __VA_ARGS__> \
 
 #define TRAIT_API_WITH_CONDITIONS(NAME, CONDITION, Y, ...) \
-TRAIT_API(NAME) __VA_ARGS__ std::enable_if_t<CONDITION, Y> \
+TRAIT_API(NAME, __VA_ARGS__)  std::enable_if_t<CONDITION, Y> \
 
-#define INVOKE_TRAIT_IMPL(NAME, Func, ...) T::__Impl::__TRAIT_NAME(NAME)::Func(__VA_ARGS__)
+#define INVOKE_TRAIT_IMPL(NAME, Func, ...) T::__Impl::__TRAIT_NAME(NAME)::REMOVE_OPTIONAL_PARENS(Func)(__VA_ARGS__)
