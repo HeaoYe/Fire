@@ -10,7 +10,7 @@ namespace Fire {
             T result {};
             for (SizeT i = 0; i < T::Dims1; i ++) {
                 for (SizeT j = 0; j < T::Dims2; j ++) {
-                    result[i][j] = lhs[i][j] + rhs[i][j];
+                    result.set(i, j, lhs.get(i, j) + rhs.get(i, j));
                 }
             }
             return result;
@@ -20,7 +20,7 @@ namespace Fire {
             T result {};
             for (SizeT i = 0; i < T::Dims1; i ++) {
                 for (SizeT j = 0; j < T::Dims2; j ++) {
-                    result[i][j] = lhs[i][j] - rhs[i][j];
+                    result.set(i, j, lhs.get(i, j) - rhs.get(i, j));
                 }
             }
             return result;
@@ -30,7 +30,7 @@ namespace Fire {
             T result {};
             for (SizeT i = 0; i < T::Dims1; i ++) {
                 for (SizeT j = 0; j < T::Dims2; j ++) {
-                    result[i][j] = -rhs[i][j];
+                    result.set(i, j, -rhs.get(i, j));
                 }
             }
             return result;

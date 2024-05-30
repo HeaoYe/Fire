@@ -28,21 +28,13 @@ namespace Fire {
             return data[idx];
         }
 
-        void set(SizeT idx, T value) {
-            data[idx] = value;
-        }
-
         template <SizeT Idx>
         void set(T value) {
             data[Idx] = value;
         }
 
-        T operator[](SizeT idx) const {
-            return data[idx];
-        }
-
-        T &operator[](SizeT idx) {
-            return data[idx];
+        void set(SizeT idx, T value) {
+            data[idx] = value;
         }
     };
 }

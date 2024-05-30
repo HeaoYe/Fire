@@ -30,13 +30,13 @@ namespace Fire {
             return data[idx1][idx2];
         }
 
-        void set(SizeT idx1, SizeT idx2, T value) {
-            data[idx1][idx2] = value;
-        }
-
         template <SizeT Idx1, SizeT Idx2>
         void set(T value) {
             data[Idx1][Idx2] = value;
+        }
+
+        void set(SizeT idx1, SizeT idx2, T value) {
+            data[idx1][idx2] = value;
         }
     };
 }

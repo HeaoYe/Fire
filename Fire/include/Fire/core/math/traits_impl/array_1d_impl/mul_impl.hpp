@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Fire/core/math/types.hpp>
 #include <Fire/core/math/traits/mul.hpp>
 
 namespace Fire {
@@ -18,7 +19,7 @@ namespace Fire {
         }
 
         ENABLE_IF_IMPL_TRAIT(Mul, void, static) InverseSelf(T &rhs) {
-            for (std::remove_const_t<decltype(T::Dims)> i { 0 }; i < T::Dims; i ++) {
+            for (SizeT i = 0; i < T::Dims; i ++) {
                 rhs.set(i, (typename T::Scalar { 1 }) / rhs.get(i));
             }
         }

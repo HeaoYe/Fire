@@ -8,7 +8,7 @@ namespace Fire {
         ENABLE_IF_IMPL_TRAIT(Norm, Real, static) OneNorm(const T &rhs) {
             Real result { 0 };
             for (SizeT i = 0; i < T::Dims; i ++) {
-                result += rhs[i];
+                result += rhs.get(i);
             }
             return result;
         }
@@ -16,7 +16,7 @@ namespace Fire {
         ENABLE_IF_IMPL_TRAIT(Norm, Real, static) TwoNorm(const T &rhs) {
             Real result { 0 };
             for (SizeT i = 0; i < T::Dims; i ++) {
-                result += rhs[i] * rhs[i];
+                result += rhs.get(i) * rhs.get(i);
             }
             return Sqrt(result);
         }
