@@ -75,6 +75,14 @@ int main() {
     FIRE_WARN("{} {} {}", point3.get(0), point3.get(1), point3.get(2))
     FIRE_WARN("{} {}", Fire::Sqrt(-1.f), Fire::SafeSqrt(-1.f))
 
+    auto wavelengths_sample = Fire::WavelengthsSample::GenerateUniformSample(0.2);
+    Fire::ConstantSD csd { 1 };
+    auto ss = Fire::SampleSpectrumDistribution(csd, wavelengths_sample);
+    ss += ss;
+    ss *= ss;
+    FIRE_WARN("{} {} {} {}", wavelengths_sample.getWavelength(0), wavelengths_sample.getWavelength(1), wavelengths_sample.getWavelength(2), wavelengths_sample.getWavelength(3))
+    FIRE_WARN("{} {} {} {}", ss.get(0), ss.get(1), ss.get(2), ss.get(3))
+
     Fire::Logger::Destory();
     return 0;
 }
