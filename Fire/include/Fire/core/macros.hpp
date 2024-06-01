@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cassert>  // IWYU pragma: export
+
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 
@@ -11,6 +13,12 @@
     #endif
 #else
     #define FIRE_API
+#endif
+
+#if defined (FIRE_DEBUG_MODE)
+    #define DASSERT(...) assert(__VA_ARGS__)
+#else
+    #define DASSERT(...)
 #endif
 
 #define JOIN(x, ...) __INTERNAL_JOIN(x, __VA_ARGS__)

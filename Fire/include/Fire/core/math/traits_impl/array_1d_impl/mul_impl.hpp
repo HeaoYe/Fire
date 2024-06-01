@@ -7,7 +7,7 @@ namespace Fire {
     class Array1DMulTraitImpl {
     public:
         TRAIT_API(Mul) static T OpMul(const T &lhs, const T &rhs) {
-            return InternalOpScalarMul(lhs, rhs, T::IndexSequence);
+            return InternalOpMul(lhs, rhs, T::IndexSequence);
         }
 
         TRAIT_API(Mul) static T OpDiv(const T &lhs, const T &rhs) {

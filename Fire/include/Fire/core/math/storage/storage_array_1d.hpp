@@ -7,9 +7,10 @@
 
 namespace Fire {
     #define DEFINE_STORAGE_ARRAY_1D(...) \
-        DEFINE_STORAGE(Array1DImpl, __VA_ARGS__) \
-        using BaseStorage::Dims; \
-        using BaseStorage::IndexSequence; \
+        public: \
+            DEFINE_STORAGE(Array1DImpl, __VA_ARGS__) \
+            using BaseStorage::Dims; \
+            using BaseStorage::IndexSequence; \
 
     template <ConceptArithmetic T, SizeT N>
     struct StorageArray1D {
