@@ -1,7 +1,7 @@
 #include "spectrum/distributions/densely_sampled_spectrum_distribution.hpp"
 
 namespace Fire {
-    DenselySampledSD::DenselySampledSD(std::span<Real> values, Int lambda_min, Int lambda_max) : DenselySampledSD(lambda_min, lambda_max) {
+    DenselySampledSD::DenselySampledSD(std::span<const Real> values, Int lambda_min, Int lambda_max) : DenselySampledSD(lambda_min, lambda_max) {
         DASSERT(values.size() == this->values.size());
         for (Int i = 0; i < values.size(); i ++) {
             this->values[i] = values[i];

@@ -8,7 +8,7 @@
 namespace Fire {
     class PiecewiseLinearSD : public SpectrumDistribution {
     public:
-        FIRE_API PiecewiseLinearSD(std::span<Real> values, std::span<Real> lambdas);
+        FIRE_API PiecewiseLinearSD(std::span<const Real> values, std::span<const Real> lambdas);
 
         FIRE_API Real sample(Real lambda) const override;
     private:

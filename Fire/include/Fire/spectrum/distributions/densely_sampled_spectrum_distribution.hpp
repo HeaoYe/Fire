@@ -8,16 +8,16 @@
 namespace Fire {
     class DenselySampledSD : public SpectrumDistribution {
     public:
-        template <class T>
-        DenselySampledSD(T sample_function, Int lambda_min, Int lambda_max) : DenselySampledSD(lambda_min, lambda_max) {
+        template <ConceptCallable T>
+        DenselySampledSD(T sample_function, Int lambda_min = g_lambda_min, Int lambda_max = g_lambda_max) : DenselySampledSD(lambda_min, lambda_max) {
             for (Int i = 0; i < values.size(); i ++) {
                 values[i] = sample_function(lambda_min + i);
             }
         }
 
-        FIRE_API DenselySampledSD(std::span<Real> values, Int lambda_min, Int lambda_max);
+        FIRE_API DenselySampledSD(std::span<const Real> values, Int lambda_min = g_lambda_min, Int lambda_max = g_lambda_max);
 
-        FIRE_API DenselySampledSD(const SpectrumDistribution &other, Int lambda_min, Int lambda_max);
+        FIRE_API DenselySampledSD(const SpectrumDistribution &other, Int lambda_min = g_lambda_min, Int lambda_max = g_lambda_max);
 
         FIRE_API Real sample(Real lambda) const override;
     private:

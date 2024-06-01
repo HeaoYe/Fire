@@ -17,4 +17,7 @@ namespace Fire {
 
     template <class T>
     concept ConceptArithmetic = std::is_arithmetic_v<T>;
+
+    template <class T>
+    concept ConceptCallable = std::is_function_v<T>;
 }
