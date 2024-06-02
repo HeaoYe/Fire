@@ -8,7 +8,7 @@
 namespace Fire {
     /** 光谱样本值 */
     class SpectrumSampleValue : public StorageArray1D<Real, g_spectrum_sample_count> {
-        DEFINE_STORAGE_ARRAY_1D(Real, g_spectrum_sample_count)
+        DEFINE_STORAGE_ARRAY_1D_FIXED_SIZE(SpectrumSampleValue, Real, g_spectrum_sample_count)
     public:
         Real Average() const;
     };

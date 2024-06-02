@@ -79,7 +79,9 @@ int main() {
     mat *= 2;
     auto res1 = Fire::Transpose(mat);
     auto res2 = Fire::Inverse(mat);
-    auto res3 = mat * vec4_3;
+    auto res3 = res1 * res2;
+    auto res4 = mat * vec4_3;
+    Fire::Point3r res5 { res4 };
 
     auto wavelengths_sample = Fire::WavelengthsSample::GenerateUniformSample(0.2);
     Fire::ConstantSD csd { 1 };
