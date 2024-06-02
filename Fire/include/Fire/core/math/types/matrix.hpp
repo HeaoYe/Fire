@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Fire/core/math/storage/storage_array_2d.hpp>
+#include <span>
 
 namespace Fire {
     template <ConceptArithmetic T, size_t N, size_t M>
@@ -11,6 +12,14 @@ namespace Fire {
             Matrix result {};
             for (SizeT i = 0; i < N; i ++) {
                 result.set(i, i, value);
+            }
+            return result;
+        }
+
+        static std::enable_if_t<N == M, Matrix> DiagMatrix(std::span<const T> values) {
+            Matrix result {};
+            for (SizeT i = 0; i < N; i ++) {
+                result.set(i, i, values[i]);
             }
             return result;
         }

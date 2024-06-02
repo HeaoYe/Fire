@@ -18,9 +18,10 @@ namespace Fire {
                     result.set(i, j, n);
                 }
             }
+            return result;
         }
 
-        TRAIT_API_WITH_CONDITIONS(MatrixMul, (T::Dims2 == Y::Dims1), (typename T::template ResizeToT<T::Dims1, Y::Dims2>), , ConceptMatrixMul Y) static OpDiv(const T &lhs, const T &rhs) {
+        TRAIT_API_WITH_CONDITIONS(MatrixMul, (T::Dims2 == Y::Dims1), (typename T::template ResizeToT<T::Dims1, Y::Dims2>), , ConceptMatrixMul Y) static OpDiv(const T &lhs, const Y &rhs) {
             return OpMul(Inverse(rhs));
         }
 

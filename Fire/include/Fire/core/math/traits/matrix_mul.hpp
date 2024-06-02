@@ -8,11 +8,11 @@
 namespace Fire {
     DEFINE_TRAIT(MatrixMul, REQUIRE_TRAIT(Matrix))
 
-    TRAIT_API_WITH_CONDITIONS(MatrixMul, T::Dims2 == Y::Dims1, (typename T::template ResizeToT<T::Dims1, Y::Dims2>), , ConceptMatrixMul Y) operator*(const T &lhs, const T &rhs) {
+    TRAIT_API_WITH_CONDITIONS(MatrixMul, T::Dims2 == Y::Dims1, (typename T::template ResizeToT<T::Dims1, Y::Dims2>), , ConceptMatrixMul Y) operator*(const T &lhs, const Y &rhs) {
         return INVOKE_TRAIT_IMPL(MatrixMul, OpMul, lhs, rhs);
     }
 
-    TRAIT_API_WITH_CONDITIONS(MatrixMul, T::Dims2 == Y::Dims1, (typename T::template ResizeToT<T::Dims1, Y::Dims2>), , ConceptMatrixMul Y) operator/(const T &lhs, const T &rhs) {
+    TRAIT_API_WITH_CONDITIONS(MatrixMul, T::Dims2 == Y::Dims1, (typename T::template ResizeToT<T::Dims1, Y::Dims2>), , ConceptMatrixMul Y) operator/(const T &lhs, const Y &rhs) {
         return INVOKE_TRAIT_IMPL(MatrixMul, OpDiv, lhs, rhs);
     }
 
