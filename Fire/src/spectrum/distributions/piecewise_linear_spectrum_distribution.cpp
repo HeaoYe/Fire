@@ -1,4 +1,4 @@
-#include <Fire/spectrum/distributions/piecewise_linear_spectrum_distribution.hpp>
+#include "spectrum/distributions/piecewise_linear_spectrum_distribution.hpp"
 
 namespace Fire {
     PiecewiseLinearSD::PiecewiseLinearSD(std::span<const Real> values, std::span<const Real> lambdas) : values(values.size()), lambdas(lambdas.size()) {

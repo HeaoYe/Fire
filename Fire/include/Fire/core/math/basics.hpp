@@ -14,6 +14,14 @@ namespace Fire {
     using SizeT = size_t;
 
     template <ConceptArithmetic T>
+    T SafeDiv(T lhs, T rhs) {
+        if (rhs == 0) {
+            return 0;
+        }
+        return lhs / rhs;
+    }
+
+    template <ConceptArithmetic T>
     T Sqrt(T value) {
         return std::sqrt(value);
     }

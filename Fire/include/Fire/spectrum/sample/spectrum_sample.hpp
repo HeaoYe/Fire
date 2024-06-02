@@ -6,26 +6,34 @@
 #include <Fire/spectrum/basics.hpp>
 
 namespace Fire {
-    /** 光谱样本 */
-    class SpectrumSample : public StorageArray1D<Real, g_spectrum_sample_count> {
-        DEFINE_STORAGE_ARRAY_1D(StorageArray1D<Real, g_spectrum_sample_count>)
+    /** 光谱样本值 */
+    class SpectrumSampleValue : public StorageArray1D<Real, g_spectrum_sample_count> {
+        DEFINE_STORAGE_ARRAY_1D(Real, g_spectrum_sample_count)
+    public:
+        Real Average() const;
     };
 
-    /** 从光谱分布采样 */
-    FIRE_API SpectrumSample SampleSpectrumDistribution(const SpectrumDistribution &spectrum_distribution, const WavelengthsSample &wavelengths_sample);
+    /** 光谱样本 */
+    struct SpectrumSample {
+        /** 从光谱分布采样 */
+        FIRE_API static SpectrumSample FromSpectrumDistribution(const SpectrumDistribution &spectrum_distribution, const WavelengthsSample &wavelengths_sample);
+
+        const WavelengthsSample &wavelengths_sample;
+        SpectrumSampleValue value;
+    };
 
     template <>
-    IMPL_TRAIT(Add, SpectrumSample);
+    IMPL_TRAIT(Add, SpectrumSampleValue);
 
     template <>
-    IMPL_TRAIT(ScalarMul, SpectrumSample);
+    IMPL_TRAIT(ScalarMul, SpectrumSampleValue);
 
     template <>
-    IMPL_TRAIT(Linear, SpectrumSample);
+    IMPL_TRAIT(Linear, SpectrumSampleValue);
 
     template <>
-    IMPL_TRAIT(Mul, SpectrumSample);
+    IMPL_TRAIT(Mul, SpectrumSampleValue);
 
     template <>
-    IMPL_TRAIT(Ring, SpectrumSample);
+    IMPL_TRAIT(Ring, SpectrumSampleValue);
 }

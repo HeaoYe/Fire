@@ -77,11 +77,11 @@ int main() {
 
     auto wavelengths_sample = Fire::WavelengthsSample::GenerateUniformSample(0.2);
     Fire::ConstantSD csd { 1 };
-    auto ss = Fire::SampleSpectrumDistribution(csd, wavelengths_sample);
-    ss += ss;
-    ss *= ss;
+    auto ss = Fire::SpectrumSample::FromSpectrumDistribution(csd, wavelengths_sample);
+    ss.value += ss.value;
+    ss.value *= ss.value;
     FIRE_WARN("{} {} {} {}", wavelengths_sample.getWavelength(0), wavelengths_sample.getWavelength(1), wavelengths_sample.getWavelength(2), wavelengths_sample.getWavelength(3))
-    FIRE_WARN("{} {} {} {}", ss.get(0), ss.get(1), ss.get(2), ss.get(3))
+    FIRE_WARN("{} {} {} {}", ss.value.get(0), ss.value.get(1), ss.value.get(2), ss.value.get(3))
 
     Fire::Logger::Destory();
     return 0;

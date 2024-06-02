@@ -6,7 +6,7 @@
 namespace Fire {
     template <ConceptArithmetic T, size_t N>
     struct Scale : public StorageArray1D<T, N> {
-        DEFINE_STORAGE_ARRAY_1D(StorageArray1D<T, N>)
+        DEFINE_STORAGE_ARRAY_1D(T, N)
     };
 
     template <ConceptArithmetic T, size_t N>
@@ -29,6 +29,11 @@ namespace Fire {
         return T { (lhs.template get<Indices>() * rhs.template get<Indices>())... };
     }
 
+    template <class T, SizeT ...Indices>
+    static T __InternalSafeDiv(const T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs, std::index_sequence<Indices...>) {
+        return T { SafeDiv(lhs.template get<Indices>(), rhs.template get<Indices>())... };
+    }
+
     TRAIT_API(ScalarMul) T operator*(const T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
         return __InternalOpScaleMul(lhs, rhs, T::IndexSequence);
     }
@@ -36,6 +41,7 @@ namespace Fire {
     TRAIT_API(ScalarMul) T operator*(const Scale<typename T::Scalar, T::Dims> &lhs, const T &rhs) {
         return __InternalOpScaleMul(rhs, lhs, T::IndexSequence);
     }
+
     TRAIT_API(ScalarMul) void operator*=(T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
         lhs = lhs * rhs;
     }
@@ -46,5 +52,9 @@ namespace Fire {
 
     TRAIT_API(ScalarMul) void operator/=(T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
         lhs = lhs / rhs;
+    }
+
+    TRAIT_API(ScalarMul) T SafeDiv(const T &lhs, const Scale<typename T::Scalar, T::Dims> &rhs) {
+        return __InternalSafeDiv(lhs, rhs, T::IndexSequence);
     }
 }

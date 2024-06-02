@@ -1,4 +1,4 @@
-#include <Fire/spectrum/sample/wavelengths_sample.hpp>
+#include "spectrum/sample/wavelengths_sample.hpp"
 
 namespace Fire {
     WavelengthsSample WavelengthsSample::GenerateUniformSample(Real u, Real lambda_min, Real lambda_max) {

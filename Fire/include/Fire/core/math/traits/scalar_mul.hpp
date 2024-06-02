@@ -24,4 +24,8 @@ namespace Fire {
     TRAIT_API(ScalarMul) void operator/=(T &lhs, typename T::Scalar rhs) {
         lhs = lhs / rhs;
     }
+
+    TRAIT_API(ScalarMul) T SafeDiv(const T &lhs, typename T::Scalar rhs) {
+        return INVOKE_TRAIT_IMPL(ScalarMul, SafeDiv, lhs, rhs);
+    }
 }

@@ -8,7 +8,7 @@
 namespace Fire {
     #define DEFINE_STORAGE_ARRAY_1D(...) \
         public: \
-            DEFINE_STORAGE(Array1DImpl, __VA_ARGS__) \
+            DEFINE_STORAGE(Array1DImpl, ::Fire::StorageArray1D<__VA_ARGS__>) \
             using BaseStorage::Dims; \
             using BaseStorage::IndexSequence; \
 
