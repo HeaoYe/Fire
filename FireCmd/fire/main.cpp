@@ -75,6 +75,12 @@ int main() {
     FIRE_WARN("{} {} {}", point3.get(0), point3.get(1), point3.get(2))
     FIRE_WARN("{} {}", Fire::Sqrt(-1.f), Fire::SafeSqrt(-1.f))
 
+    Fire::Matrix<Fire::Real, 3, 3> mat = Fire::Matrix<Fire::Real, 3, 3>::IdentityMatrix();
+    mat *= 2;
+    auto res1 = Fire::Transpose(mat);
+    auto res2 = Fire::Inverse(mat);
+    auto res3 = mat * vec4_3;
+
     auto wavelengths_sample = Fire::WavelengthsSample::GenerateUniformSample(0.2);
     Fire::ConstantSD csd { 1 };
     auto ss = Fire::SpectrumSample::FromSpectrumDistribution(csd, wavelengths_sample);

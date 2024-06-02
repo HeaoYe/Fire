@@ -6,11 +6,13 @@
 #include <Fire/core/math/traits_impl/array_2d_impl/array_2d_impl.hpp>
 
 namespace Fire {
-    #define DEFINE_STORAGE_ARRAY_2D(...) \
-        DEFINE_STORAGE(Array2DImpl, __VA_ARGS__) \
+    #define DEFINE_STORAGE_ARRAY_2D(NAME, T, ...) \
+        DEFINE_STORAGE(Array2DImpl, StorageArray2D<T, __VA_ARGS__>) \
         using BaseStorage::Dims1; \
         using BaseStorage::Dims2; \
         using BaseStorage::IndexSequence; \
+        template <SizeT NewDims1, SizeT NewDims2> \
+        using ResizeToT = NAME<T, NewDims1, NewDims2>; \
 
     template <ConceptArithmetic T, SizeT N, SizeT M>
     struct StorageArray2D {

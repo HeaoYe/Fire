@@ -6,7 +6,7 @@
 namespace Fire {
     class Array2DAddTraitImpl {
     public:
-        ENABLE_IF_IMPL_TRAIT(Add, T, static) OpAdd(const T &lhs, const T &rhs) {
+        TRAIT_API(Add) static T OpAdd(const T &lhs, const T &rhs) {
             T result {};
             for (SizeT i = 0; i < T::Dims1; i ++) {
                 for (SizeT j = 0; j < T::Dims2; j ++) {
@@ -16,7 +16,7 @@ namespace Fire {
             return result;
         }
 
-        ENABLE_IF_IMPL_TRAIT(Add, T, static) OpSub(const T &lhs, const T &rhs) {
+        TRAIT_API(Add) static T OpSub(const T &lhs, const T &rhs) {
             T result {};
             for (SizeT i = 0; i < T::Dims1; i ++) {
                 for (SizeT j = 0; j < T::Dims2; j ++) {
@@ -26,7 +26,7 @@ namespace Fire {
             return result;
         }
 
-        ENABLE_IF_IMPL_TRAIT(Add, T, static) OpOpposite(const T &rhs) {
+       TRAIT_API(Add) static T OpOpposite(const T &rhs) {
             T result {};
             for (SizeT i = 0; i < T::Dims1; i ++) {
                 for (SizeT j = 0; j < T::Dims2; j ++) {

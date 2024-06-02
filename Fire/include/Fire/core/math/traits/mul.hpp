@@ -13,7 +13,6 @@ namespace Fire {
         lhs = lhs * rhs;
     }
 
-
     TRAIT_API(Mul) T operator/(const T &lhs, const T &rhs) {
         return INVOKE_TRAIT_IMPL(Mul, OpDiv, lhs, rhs);
     }

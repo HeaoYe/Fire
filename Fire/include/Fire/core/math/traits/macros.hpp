@@ -19,7 +19,13 @@ struct __TRAIT_REQUIRE_NAME(NAME) { \
 template <class T> \
 concept __TRAIT_CONCEPT_NAME(NAME) = __TRAIT_NAME(NAME) <T>::value; \
 
-#define REQUIRE_TRAIT(NAME)  __TRAIT_NAME(NAME)<T>
+template <class T, class Y>
+struct __InternalOneOf {
+    constexpr static bool value = T::value | Y::value;
+};
+
+#define REQUIRE_TRAIT(NAME) __TRAIT_NAME(NAME)<T>
+#define REQUIRE_ONE_OF(NAME1, NAME2) __InternalOneOf<REQUIRE_TRAIT(NAME1), REQUIRE_TRAIT(NAME2)>
 
 #define IMPL_TRAIT(NAME, ...) \
 struct __TRAIT_NAME(NAME)<__VA_ARGS__> { \
@@ -33,6 +39,6 @@ struct __TRAIT_NAME(NAME)<__VA_ARGS__> { \
 template <__TRAIT_CONCEPT_NAME(NAME) T __VA_ARGS__> \
 
 #define TRAIT_API_WITH_CONDITIONS(NAME, CONDITION, Y, ...) \
-TRAIT_API(NAME, __VA_ARGS__)  std::enable_if_t<CONDITION, Y> \
+TRAIT_API(NAME, __VA_ARGS__) std::enable_if_t<CONDITION, REMOVE_OPTIONAL_PARENS(Y)> \
 
 #define INVOKE_TRAIT_IMPL(NAME, Func, ...) T::__Impl::__TRAIT_NAME(NAME)::REMOVE_OPTIONAL_PARENS(Func)(__VA_ARGS__)

@@ -15,15 +15,15 @@ namespace Fire {
         }
 
         TRAIT_API(ScalarMul) static T SafeDiv(const T &lhs, typename T::Scalar rhs) {
-            return InternalSafeDiv(lhs, (typename T::Scalar { 1 }) / rhs, T::IndexSequence);
+            return InternalSafeDiv(lhs, rhs, T::IndexSequence);
         }
     private:
-        template <class T, SizeT ...Indices>
+        template <ConceptScalarMul T, SizeT ...Indices>
         static T InternalOpScalarMul(const T &lhs, typename T::Scalar rhs, std::index_sequence<Indices...>) {
             return T { (lhs.template get<Indices>() * rhs)... };
         }
 
-        template <class T, SizeT ...Indices>
+        template <ConceptScalarMul T, SizeT ...Indices>
         static T InternalSafeDiv(const T &lhs, typename T::Scalar rhs, std::index_sequence<Indices...>) {
             return T { SafeDiv(lhs.template get<Indices>(), rhs)... };
         }
