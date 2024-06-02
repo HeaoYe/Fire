@@ -10,6 +10,7 @@
 #include <Fire/core/math/traits_impl/array_1d_impl/affine_impl.hpp>
 #include <Fire/core/math/traits/linear.hpp>  // IWYU pragma: export
 #include <Fire/core/math/traits/ring.hpp>  // IWYU pragma: export
+#include <Fire/core/math/traits/matrix_multiplicable.hpp>  // IWYU pragma: export
 
 namespace Fire {
     struct Array1DImpl {

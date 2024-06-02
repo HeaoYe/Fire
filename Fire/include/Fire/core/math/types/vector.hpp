@@ -5,7 +5,7 @@
 namespace Fire {
     template <ConceptArithmetic T, size_t N>
     struct Vector : public StorageArray1D<T, N> {
-        DEFINE_STORAGE_ARRAY_1D(T, N)
+        DEFINE_STORAGE_ARRAY_1D(Vector, T, N)
     };
 
     template <ConceptArithmetic T, size_t N>
@@ -28,4 +28,7 @@ namespace Fire {
 
     template <ConceptArithmetic T, size_t N>
     IMPL_TRAIT(EuclideanV, Vector<T, N>)
+
+    template <ConceptArithmetic T, size_t N>
+    IMPL_TRAIT(MatrixMultiplicable, Vector<T, N>)
 }

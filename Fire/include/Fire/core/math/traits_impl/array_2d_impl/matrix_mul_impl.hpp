@@ -37,8 +37,8 @@ namespace Fire {
             rhs = Inverse(rhs);
         }
 
-        TRAIT_API(MatrixMul) static Vector<typename T::Scalar, T::Dims1> OpMulVector(const T &lhs, const Vector<typename T::Scalar, T::Dims2> &rhs) {
-            Vector<typename T::Scalar, T::Dims1> result {};
+        TRAIT_API_WITH_CONDITIONS(MatrixMul, T::Dims2 == Y::Dims, typename Y::template ResizeToT<T::Dims1>, , ConceptMatrixMultiplicable Y) static OpMulMultiplicable(const T &lhs, const Y &rhs) {
+            typename Y::template ResizeToT<T::Dims1> result {};
             for (SizeT i = 0; i < T::Dims1; i++) {
                 Real n {};
                 for (SizeT j = 0; j < T::Dims2; j ++) {
