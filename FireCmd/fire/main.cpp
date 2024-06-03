@@ -2,6 +2,8 @@
 
 int main() {
     Fire::Logger::Initialize();
+    Fire::Illuminants::Initialize();
+    Fire::ColorSpace::Initialize();
     Fire::ThreadPool *tp = new Fire::ThreadPool {};
 
     auto *p = Fire::Task::CreateTask([]() {
@@ -49,24 +51,24 @@ int main() {
     Fire::Task::FreeTask(p2);
     Fire::Task::FreeTask(pf);
 
-    Fire::Vector<float, 2> vec1 { 0, 2 };
-    Fire::Vector<float, 2> vec2 { 1, 3 };
+    Fire::Vector<Fire::Real, 2> vec1 { 0, 2 };
+    Fire::Vector<Fire::Real, 2> vec2 { 1, 3 };
     auto vec3 = vec1 - vec2;
     vec3 *= 2.2;
     auto vec4 = -vec2;
     FIRE_WARN("{} {} {}", vec3.get(0), vec3.get(1), Dot(vec3, vec4))
-    Fire::Vector<float, 3> vec1_3 { 0, 2 };
-    Fire::Vector<float, 3> vec2_3 { 1, 3 };
+    Fire::Vector<Fire::Real, 3> vec1_3 { 0, 2 };
+    Fire::Vector<Fire::Real, 3> vec2_3 { 1, 3 };
 
-    Fire::Scale<float, 3> scale3 { 1, 2, 2 };
+    Fire::Scale<Fire::Real, 3> scale3 { 1, 2, 2 };
     // Cross(vec1, vec2);   // error
     auto vec3_3 = Cross(vec1_3, vec2_3) / scale3;
     auto vec4_3 = Cross(vec2_3, vec1_3);
     FIRE_WARN("{} {} {}", vec3_3.get(0), vec3_3.get(1), vec3_3.get(2))
     FIRE_WARN("{} {} {}", vec4_3.get(0), vec4_3.get(1), vec4_3.get(2))
 
-    Fire::Point<float, 3> point1 { 2, 1, 1 };
-    Fire::Point<float, 3> point2 { 2, 1, 1 };
+    Fire::Point<Fire::Real, 3> point1 { 2, 1, 1 };
+    Fire::Point<Fire::Real, 3> point2 { 2, 1, 1 };
     point1 *= scale3;
     FIRE_WARN("{} {} {}", point1.get(0), point1.get(1), point1.get(2))
     auto vector_pp = point1 - point2;
@@ -91,6 +93,26 @@ int main() {
     FIRE_WARN("{} {} {} {}", wavelengths_sample.getWavelength(0), wavelengths_sample.getWavelength(1), wavelengths_sample.getWavelength(2), wavelengths_sample.getWavelength(3))
     FIRE_WARN("{} {} {} {}", ss.value.get(0), ss.value.get(1), ss.value.get(2), ss.value.get(3))
 
+    Fire::Real c = 0.9;
+    FIRE_WARN("{}", Fire::Sigmoid((c - 0.5) / std::sqrt(c * (1 - c))));
+
+    auto sample_illum = Fire::SpectrumSample::FromSpectrumDistribution(Fire::g_cie_illuminant_D6500, wavelengths_sample);
+    auto rgb = Fire::RGB::FromSpectrumSample(Fire::g_colorspace_sRGB, sample_illum);
+    FIRE_INFO("{} {} {}", rgb.get(0), rgb.get(1), rgb.get(2));
+
+    auto rgb_spectrum = Fire::RGBSigmoidPolynomialSD::FromRGB(Fire::g_colorspace_sRGB, { 0.7, 0.5, 0.8 });
+    for (Fire::Int i = Fire::g_lambda_min; i <= Fire::g_lambda_max; i ++) {
+        FIRE_INFO("{} ==> {}", i, rgb_spectrum.sample(i));
+    }
+    auto sample_rgb = Fire::SpectrumSample::FromSpectrumDistribution(rgb_spectrum, wavelengths_sample);
+    auto rgb1 = Fire::RGB::FromSpectrumSample(Fire::g_colorspace_sRGB, sample_rgb);
+    sample_rgb.value *= sample_illum.value;
+    auto rgb2 = Fire::RGB::FromSpectrumSample(Fire::g_colorspace_sRGB, sample_rgb);
+    FIRE_INFO("{} {} {}", rgb1.get(0), rgb1.get(1), rgb1.get(2));
+    FIRE_INFO("{} {} {}", rgb2.get(0), rgb2.get(1), rgb2.get(2));
+
+    Fire::ColorSpace::Destroy();
+    Fire::Illuminants::Destroy();
     Fire::Logger::Destory();
     return 0;
 }

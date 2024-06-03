@@ -8,6 +8,8 @@
 namespace Fire {
     class PiecewiseLinearSD : public SpectrumDistribution {
     public:
+        FIRE_API static PiecewiseLinearSD FromInterleaved(std::span<const Real> interleaved, bool normalize);
+    public:
         PiecewiseLinearSD() = default;
         FIRE_API PiecewiseLinearSD(std::span<const Real> values, std::span<const Real> lambdas);
 

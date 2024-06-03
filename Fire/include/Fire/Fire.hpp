@@ -13,5 +13,13 @@
 #include <Fire/spectrum/distributions/constant_spectrum_distribution.hpp>
 #include <Fire/spectrum/distributions/densely_sampled_spectrum_distribution.hpp>
 #include <Fire/spectrum/distributions/piecewise_linear_spectrum_distribution.hpp>
+#include <Fire/spectrum/distributions/rgb_sigmoid_polynomial_spectrum_distribution.hpp>
+#include <Fire/spectrum/distributions/rgb_spectrum_distributions.hpp>
 #include <Fire/spectrum/sample/wavelengths_sample.hpp>
 #include <Fire/spectrum/sample/spectrum_sample.hpp>
+#include <Fire/spectrum/color/cie_matching_curves.hpp>
+#include <Fire/spectrum/color/illuminants.hpp>
+#include <Fire/spectrum/color/rgb_to_spectrum.hpp>
+#include <Fire/spectrum/color/xyz.hpp>
+#include <Fire/spectrum/color/colorspace.hpp>
+#include <Fire/spectrum/color/rgb.hpp>

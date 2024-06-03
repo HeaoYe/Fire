@@ -58,4 +58,19 @@ namespace Fire {
         T error = FMA(-c, d, cd);
         return result + error;
     }
+
+
+    inline Real EvaluatePolynomial(Real t, Real c) { return c; }
+
+    template <class T, ConceptArithmetic... Args>
+    Real EvaluatePolynomial(Real t, T c, Args... args) {
+        return FMA(t, EvaluatePolynomial(t, Real(args)...), c);
+    }
+
+    inline Real Sigmoid(Real rhs) {
+        if (std::isinf(rhs)) {
+            return rhs > 0 ? 1 : 0;
+        }
+        return 0.5 + rhs / (2 * Sqrt(1 + rhs * rhs));
+    };
 }
