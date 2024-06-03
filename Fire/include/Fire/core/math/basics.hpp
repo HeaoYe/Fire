@@ -5,7 +5,7 @@
 #include <cmath>
 
 namespace Fire {
-#if defined (FIRE_USE_DOUBLE_AS_FLOAT)
+#if defined (FIRE_USE_DOUBLE_AS_REAL)
     using Real = double;
 #else
     using Real = float;

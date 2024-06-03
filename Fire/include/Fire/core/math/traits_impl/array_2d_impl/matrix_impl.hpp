@@ -33,9 +33,10 @@ namespace Fire {
 
         template <ConceptMatrix T>
         static typename T::Scalar InternalDet3(const T &rhs) {
-			return rhs.get(0, 0) * DifferenceOfProducts(rhs.get(1, 1), rhs.get(2, 2), rhs.get(2, 1), rhs.get(1, 2)) +
-                rhs.get(1, 0) * DifferenceOfProducts(rhs.get(2, 1), rhs.get(0, 2), rhs.get(0, 1), rhs.get(2, 2)) +
-                rhs.get(2, 0) * DifferenceOfProducts(rhs.get(0, 1), rhs.get(1, 2), rhs.get(1, 1), rhs.get(0, 2));
+            Real minor12 = DifferenceOfProducts(rhs.get(1, 1), rhs.get(2, 2), rhs.get(1, 2), rhs.get(2, 1));
+            Real minor02 = DifferenceOfProducts(rhs.get(1, 0), rhs.get(2, 2), rhs.get(1, 2), rhs.get(2, 0));
+            Real minor01 = DifferenceOfProducts(rhs.get(1, 0), rhs.get(2, 1), rhs.get(1, 1), rhs.get(2, 0));
+            return FMA<Real>(rhs.get(0, 2), minor01, DifferenceOfProducts(rhs.get(0, 0), minor12, rhs.get(0, 1), minor02));
         }
     };
 }

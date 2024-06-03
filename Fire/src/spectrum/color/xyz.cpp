@@ -4,14 +4,6 @@
 #include "spectrum/color/colorspace.hpp"
 
 namespace Fire {
-    static Real SpectrumDistributionInnerProduct(const SpectrumDistribution &lhs, const SpectrumDistribution &rhs) {
-        Real result {};
-        for (Int i = g_lambda_min; i <= g_lambda_max; i ++) {
-            result += lhs.sample(i) * rhs.sample(i);
-        }
-        return result;
-    }
-
     XYZ XYZ::FromSpectrumDistribution(const SpectrumDistribution &spectrum_distribution) {
         Real x = SpectrumDistributionInnerProduct(g_cie_x_matching_function, spectrum_distribution);
         Real y = SpectrumDistributionInnerProduct(g_cie_y_matching_function, spectrum_distribution);
@@ -24,15 +16,15 @@ namespace Fire {
         auto cie_x_sample = SpectrumSample::FromSpectrumDistribution(g_cie_x_matching_function, sample.wavelengths_sample);
         auto cie_y_sample = SpectrumSample::FromSpectrumDistribution(g_cie_y_matching_function, sample.wavelengths_sample);
         auto cie_z_sample = SpectrumSample::FromSpectrumDistribution(g_cie_z_matching_function, sample.wavelengths_sample);
-        Real x = SafeDiv(cie_x_sample.value * sample.value, pdf).Average();
-        Real y = SafeDiv(cie_y_sample.value * sample.value, pdf).Average();
-        Real z = SafeDiv(cie_z_sample.value * sample.value, pdf).Average();
+        Real x = SafeDiv(cie_x_sample.value * sample.value, pdf).average();
+        Real y = SafeDiv(cie_y_sample.value * sample.value, pdf).average();
+        Real z = SafeDiv(cie_z_sample.value * sample.value, pdf).average();
         return XYZ { x, y, z } / g_cie_y_integral;
     }
 
     XYZ XYZ::FromxyY(const xyY &xyy) {
         Real sum = xyy.get(2) / xyy.get(1);
-        return XYZ { xyy.get(0) * sum, xyy.get(1), (Real(1) - xyy.get(0) - xyy.get(1)) * sum };
+        return XYZ { xyy.get(0) * sum, xyy.get(2), (Real(1) - xyy.get(0) - xyy.get(1)) * sum };
     }
 
     XYZ XYZ::FromRGB(const ColorSpace &colorspace, const RGB &rgb) {

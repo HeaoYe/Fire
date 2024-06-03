@@ -31,5 +31,12 @@ namespace Fire {
         DEFINE_STORAGE_ARRAY_1D_FIXED_SIZE(xyY, Real, 3);
     public:
         FIRE_API static xyY FromXYZ(const XYZ &xyz);
+    public:
+        xyY() = default;
+        xyY(Real x, Real y, Real Y = 1) {
+            data[0] = x;
+            data[1] = y;
+            data[2] = Y;
+        }
     };
 }

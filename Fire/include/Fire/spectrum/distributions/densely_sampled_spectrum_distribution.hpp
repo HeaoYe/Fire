@@ -8,6 +8,7 @@
 namespace Fire {
     class DenselySampledSD : public SpectrumDistribution {
     public:
+        DenselySampledSD() = default;
         template <ConceptCallable T>
         DenselySampledSD(T sample_function, Int lambda_min = g_lambda_min, Int lambda_max = g_lambda_max) : DenselySampledSD(lambda_min, lambda_max) {
             for (Int i = 0; i < values.size(); i ++) {

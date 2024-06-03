@@ -1,7 +1,7 @@
 #include "spectrum/sample/spectrum_sample.hpp"
 
 namespace Fire {
-    Real SpectrumSampleValue::Average() const {
+    Real SpectrumSampleValue::average() const {
         Real result = 0;
         for (Int i = 0; i < g_spectrum_sample_count; i ++) {
             result += get(i);

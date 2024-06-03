@@ -332,7 +332,7 @@ namespace Fire {
 
     DenselySampledSD g_cie_x_matching_function = DenselySampledSD(PiecewiseLinearSD(g_cie_x.data, g_cie_lambdas.data));
 
-    DenselySampledSD g_cie_z_matching_function = DenselySampledSD(PiecewiseLinearSD(g_cie_y.data, g_cie_lambdas.data));
+    DenselySampledSD g_cie_y_matching_function = DenselySampledSD(PiecewiseLinearSD(g_cie_y.data, g_cie_lambdas.data));
 
-    DenselySampledSD g_cie_y_matching_function = DenselySampledSD(PiecewiseLinearSD(g_cie_z.data, g_cie_lambdas.data));
+    DenselySampledSD g_cie_z_matching_function = DenselySampledSD(PiecewiseLinearSD(g_cie_z.data, g_cie_lambdas.data));
 }
