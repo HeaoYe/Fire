@@ -18,17 +18,17 @@ namespace Fire {
             return InternalOpOpposite(rhs, T::IndexSequence);
         }
     private:
-        template <class T, SizeT ...Indices>
+        template <ConceptAdd T, SizeT ...Indices>
         static T InternalOpAdd(const T &lhs, const T &rhs, std::index_sequence<Indices...>) {
             return T { (lhs.template get<Indices>() + rhs.template get<Indices>())... };
         }
 
-        template <class T, SizeT ...Indices>
+        template <ConceptAdd T, SizeT ...Indices>
         static T InternalOpSub(const T &lhs, const T &rhs, std::index_sequence<Indices...>) {
             return T { (lhs.template get<Indices>() - rhs.template get<Indices>())... };
         }
 
-        template <class T, SizeT ...Indices>
+        template <ConceptAdd T, SizeT ...Indices>
         static T InternalOpOpposite(const T &rhs, std::index_sequence<Indices...>) {
             return T { (-(rhs.template get<Indices>()))... };
         }

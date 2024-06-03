@@ -1,7 +1,7 @@
 project(Fire)
 
 option(FIRE_BUILD_SHARED OFF)
-option(FIRE_USE_DOUBLE_AS_FLOAT ON)
+option(FIRE_USE_DOUBLE_AS_REAL ON)
 
 set(CMAKE_C_STANDARD 20)
 set(CMAKE_CXX_STANDARD 20)
@@ -25,8 +25,8 @@ if (FIRE_DEBUG_MODE)
     target_compile_definitions(Fire PUBLIC FIRE_DEBUG_MODE)
 endif()
 
-if (FIRE_USE_DOUBLE_AS_FLOAT)
-    target_compile_definitions(Fire PUBLIC FIRE_USE_DOUBLE_AS_FLOAT)
+if (FIRE_USE_DOUBLE_AS_REAL)
+    target_compile_definitions(Fire PUBLIC FIRE_USE_DOUBLE_AS_REAL)
 endif()
 
 if (WIN32)

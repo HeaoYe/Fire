@@ -6,10 +6,21 @@
 #include <Fire/core/math/traits_impl/array_1d_impl/array_1d_impl.hpp>
 
 namespace Fire {
-    #define DEFINE_STORAGE_ARRAY_1D(...) \
-        DEFINE_STORAGE(Array1DImpl, __VA_ARGS__) \
-        using BaseStorage::Dims; \
-        using BaseStorage::IndexSequence; \
+    #define DEFINE_STORAGE_ARRAY_1D(NAME, T, ...) \
+        public: \
+            DEFINE_STORAGE(Array1DImpl, ::Fire::StorageArray1D<T, __VA_ARGS__>) \
+            using BaseStorage::Dims; \
+            using BaseStorage::IndexSequence; \
+            template <SizeT NewDims> \
+            using ResizeToT = NAME<T, NewDims>; \
+
+    #define DEFINE_STORAGE_ARRAY_1D_FIXED_SIZE(NAME, T, ...) \
+        public: \
+            DEFINE_STORAGE(Array1DImpl, ::Fire::StorageArray1D<T, __VA_ARGS__>) \
+            using BaseStorage::Dims; \
+            using BaseStorage::IndexSequence; \
+            template <SizeT NewDims> \
+            using ResizeToT = NAME; \
 
     template <ConceptArithmetic T, SizeT N>
     struct StorageArray1D {

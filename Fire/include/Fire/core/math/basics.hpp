@@ -5,13 +5,21 @@
 #include <cmath>
 
 namespace Fire {
-#if defined (FIRE_USE_DOUBLE_AS_FLOAT)
+#if defined (FIRE_USE_DOUBLE_AS_REAL)
     using Real = double;
 #else
     using Real = float;
 #endif
     using Int = int32_t;
     using SizeT = size_t;
+
+    template <ConceptArithmetic T>
+    T SafeDiv(T lhs, T rhs) {
+        if (rhs == 0) {
+            return 0;
+        }
+        return lhs / rhs;
+    }
 
     template <ConceptArithmetic T>
     T Sqrt(T value) {
@@ -26,6 +34,11 @@ namespace Fire {
     template <ConceptArithmetic T>
     T Squa(T value) {
         return value * value;
+    }
+
+    template <ConceptArithmetic T>
+    T Lerp(T a, T b, T t) {
+        return a * (1 - t) + b * t;
     }
 
     template <ConceptArithmetic T>
@@ -45,4 +58,19 @@ namespace Fire {
         T error = FMA(-c, d, cd);
         return result + error;
     }
+
+
+    inline Real EvaluatePolynomial(Real t, Real c) { return c; }
+
+    template <class T, ConceptArithmetic... Args>
+    Real EvaluatePolynomial(Real t, T c, Args... args) {
+        return FMA(t, EvaluatePolynomial(t, Real(args)...), c);
+    }
+
+    inline Real Sigmoid(Real rhs) {
+        if (std::isinf(rhs)) {
+            return rhs > 0 ? 1 : 0;
+        }
+        return 0.5 + rhs / (2 * Sqrt(1 + rhs * rhs));
+    };
 }

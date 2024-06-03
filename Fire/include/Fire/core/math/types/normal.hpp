@@ -5,7 +5,7 @@
 namespace Fire {
     template <ConceptArithmetic T, size_t N>
     struct Normal : public StorageArray1D<T, N> {
-        DEFINE_STORAGE_ARRAY_1D(StorageArray1D<T, N>)
+        DEFINE_STORAGE_ARRAY_1D(Normal, T, N)
     };
 
     template <ConceptArithmetic T, size_t N>

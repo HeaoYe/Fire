@@ -11,6 +11,14 @@
             "program": "${workspaceFolder}/build/FireCMD/fire/fire.exe",
             "args": [],
             "cwd": "${workspaceFolder}",
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "RGB To Spectrum",
+            "program": "${workspaceFolder}/build/FireCMD/rgb_to_spectrum/rgb_to_spectrum.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}",
         }
     ]
 }
