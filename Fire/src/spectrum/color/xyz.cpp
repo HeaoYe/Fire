@@ -23,8 +23,8 @@ namespace Fire {
     }
 
     XYZ XYZ::FromxyY(const xyY &xyy) {
-        Real sum = xyy.get(2) / xyy.get(1);
-        return XYZ { xyy.get(0) * sum, xyy.get(2), (Real(1) - xyy.get(0) - xyy.get(1)) * sum };
+        Real sum = xyy.z / xyy.y;
+        return XYZ { xyy.x * sum, xyy.z, (Real(1) - xyy.x - xyy.y) * sum };
     }
 
     XYZ XYZ::FromRGB(const ColorSpace &colorspace, const RGB &rgb) {
@@ -32,7 +32,7 @@ namespace Fire {
     }
 
     xyY xyY::FromXYZ(const XYZ &xyz) {
-        Real sum = xyz.get(0) + xyz.get(1) + xyz.get(2);
-        return xyY { xyz.get(0) / sum, xyz.get(1) / sum, xyz.get(1) };
+        Real sum = xyz.x + xyz.y + xyz.z;
+        return xyY { xyz.x / sum, xyz.y / sum, xyz.y };
     }
 }

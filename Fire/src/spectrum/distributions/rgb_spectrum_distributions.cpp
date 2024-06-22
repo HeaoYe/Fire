@@ -10,7 +10,7 @@ namespace Fire {
 
     RGBUnboundedSD::RGBUnboundedSD(const ColorSpace &colorspace, const RGB &rgb)
         : RGBAlbedoSD(colorspace, [&]() {
-            Real max = std::max<Real>({ rgb.get(0), rgb.get(1), rgb.get(2) });
+            Real max = std::max<Real>({ rgb.r, rgb.g, rgb.b });
             scale = 2 * max;
             return scale == 0 ? (RGB {}) : (rgb / scale);
         }()) {}
