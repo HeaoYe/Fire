@@ -7,33 +7,30 @@ namespace Fire {
     class Array2DAddTraitImpl {
     public:
         TRAIT_API(Add) static T OpAdd(const T &lhs, const T &rhs) {
-            T result {};
-            for (SizeT i = 0; i < T::Dims1; i ++) {
-                for (SizeT j = 0; j < T::Dims2; j ++) {
-                    result.set(i, j, lhs.get(i, j) + rhs.get(i, j));
-                }
-            }
-            return result;
+            return InternalOpAdd(lhs, rhs, T::IndexSequence);
         }
 
         TRAIT_API(Add) static T OpSub(const T &lhs, const T &rhs) {
-            T result {};
-            for (SizeT i = 0; i < T::Dims1; i ++) {
-                for (SizeT j = 0; j < T::Dims2; j ++) {
-                    result.set(i, j, lhs.get(i, j) - rhs.get(i, j));
-                }
-            }
-            return result;
+            return InternalOpSub(lhs, rhs, T::IndexSequence);
         }
 
-       TRAIT_API(Add) static T OpOpposite(const T &rhs) {
-            T result {};
-            for (SizeT i = 0; i < T::Dims1; i ++) {
-                for (SizeT j = 0; j < T::Dims2; j ++) {
-                    result.set(i, j, -rhs.get(i, j));
-                }
-            }
-            return result;
+        TRAIT_API(Add) static T OpOpposite(const T &rhs) {
+            return InternalOpOpposite(rhs, T::IndexSequence);
+        }
+    private:
+        template <ConceptAdd T, SizeT ...Indices>
+        static T InternalOpAdd(const T &lhs, const T &rhs, std::index_sequence<Indices...>) {
+            return T { (lhs.data[Indices] + rhs.data[Indices])... };
+        }
+
+        template <ConceptAdd T, SizeT ...Indices>
+        static T InternalOpSub(const T &lhs, const T &rhs, std::index_sequence<Indices...>) {
+            return T { (lhs.data[Indices] - rhs.data[Indices])... };
+        }
+
+        template <ConceptAdd T, SizeT ...Indices>
+        static T InternalOpOpposite(const T &rhs, std::index_sequence<Indices...>) {
+            return T { (-(rhs.data[Indices]))... };
         }
     };
 }
