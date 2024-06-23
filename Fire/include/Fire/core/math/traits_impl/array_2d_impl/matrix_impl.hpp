@@ -6,21 +6,21 @@
 namespace Fire {
     class Array2DMatrixTraitImpl {
     public:
-        TRAIT_API(Matrix) static typename T::template ResizeToT<T::Dims2, T::Dims1> Transpose(const T &rhs) {
-            using ResultT = typename T::template ResizeToT<T::Dims2, T::Dims1>;
+        TRAIT_API(Matrix) static typename T::template ResizeToT<T::NColumn, T::NRow> Transpose(const T &rhs) {
+            using ResultT = typename T::template ResizeToT<T::NColumn, T::NRow>;
             ResultT result {};
-            for (SizeT i = 0; i < T::Dims1; i ++) {
-                for (SizeT j = 0; j < T::Dims2; j ++) {
+            for (SizeT i = 0; i < T::NRow; i ++) {
+                for (SizeT j = 0; j < T::NColumn; j ++) {
                     result.set(j, i, rhs.get(i, j));
                 }
             }
             return result;
         }
 
-        TRAIT_API_WITH_CONDITIONS(Matrix, T::Dims1 == T::Dims2, typename T::Scalar) static Det(const T &rhs) {
-            if constexpr (T::Dims1 == 2) {
+        TRAIT_API_WITH_CONDITIONS(Matrix, T::NRow == T::NColumn, typename T::Scalar) static Det(const T &rhs) {
+            if constexpr (T::NRow == 2) {
                 return InternalDet2(rhs);
-            } else if constexpr (T::Dims1 == 3) {
+            } else if constexpr (T::NRow == 3) {
                 return InternalDet3(rhs);
             }
             return {};
@@ -28,15 +28,15 @@ namespace Fire {
     private:
         template <ConceptMatrix T>
         static typename T::Scalar InternalDet2(const T &rhs) {
-            return DifferenceOfProducts(rhs.get(0, 0), rhs.get(1, 1), rhs.get(0, 1), rhs.get(1, 0));
+            return DifferenceOfProducts(rhs.m00, rhs.m11, rhs.m01, rhs.m10);
         }
 
         template <ConceptMatrix T>
         static typename T::Scalar InternalDet3(const T &rhs) {
-            Real minor12 = DifferenceOfProducts(rhs.get(1, 1), rhs.get(2, 2), rhs.get(1, 2), rhs.get(2, 1));
-            Real minor02 = DifferenceOfProducts(rhs.get(1, 0), rhs.get(2, 2), rhs.get(1, 2), rhs.get(2, 0));
-            Real minor01 = DifferenceOfProducts(rhs.get(1, 0), rhs.get(2, 1), rhs.get(1, 1), rhs.get(2, 0));
-            return FMA<Real>(rhs.get(0, 2), minor01, DifferenceOfProducts(rhs.get(0, 0), minor12, rhs.get(0, 1), minor02));
+            Real minor12 = DifferenceOfProducts(rhs.m11, rhs.m22, rhs.m12, rhs.m21);
+            Real minor02 = DifferenceOfProducts(rhs.m10, rhs.m22, rhs.m12, rhs.m20);
+            Real minor01 = DifferenceOfProducts(rhs.m10, rhs.m21, rhs.m11, rhs.m20);
+            return FMA<Real>(rhs.m02, minor01, DifferenceOfProducts(rhs.m00, minor12, rhs.m01, minor02));
         }
     };
 }

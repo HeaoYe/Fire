@@ -8,7 +8,7 @@ namespace Fire {
     struct Matrix : public StorageArray2D<T, N, M> {
         DEFINE_STORAGE_ARRAY_2D(Matrix, T, N, M)
     public:
-        static std::enable_if_t<N == M, Matrix> IdentityMatrix(T value = 1) {
+        static std::enable_if_t<N == M, Matrix> GenerateIdentity(T value = 1) {
             Matrix result {};
             for (SizeT i = 0; i < N; i ++) {
                 result.set(i, i, value);
@@ -16,7 +16,7 @@ namespace Fire {
             return result;
         }
 
-        static std::enable_if_t<N == M, Matrix> DiagMatrix(std::span<const T> values) {
+        static std::enable_if_t<N == M, Matrix> GenerateDiag(std::span<const T> values) {
             Matrix result {};
             for (SizeT i = 0; i < N; i ++) {
                 result.set(i, i, values[i]);

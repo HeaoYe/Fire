@@ -3,7 +3,7 @@
 namespace Fire {
     RGBSigmoidPolynomialSD RGBSigmoidPolynomialSD::FromRGB(const ColorSpace &colorspace, const RGB &rgb) {
         auto cofficients = colorspace.getRGBToSpectrumTable().SampleRGBCofficients(rgb);
-        return RGBSigmoidPolynomialSD { cofficients.get(0), cofficients.get(1), cofficients.get(2) };
+        return RGBSigmoidPolynomialSD { cofficients.x, cofficients.y, cofficients.z };
     }
 
     Real RGBSigmoidPolynomialSD::sample(Real nm) const {

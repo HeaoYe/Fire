@@ -18,11 +18,11 @@ namespace Fire {
         const CoefficientArray<T> coefficients {};
     public:
         Scale3r SampleRGBCofficients(const RGB &rgb) const {
-            if ((rgb.get(0) == rgb.get(1)) && (rgb.get(1) == rgb.get(2))) {
-                return Scale3r { 0, 0, Real(rgb.get(0) - 0.5) / Sqrt<Real>(rgb.get(0) * (1 - rgb.get(0))) };
+            if ((rgb.r == rgb.g) && (rgb.g == rgb.b)) {
+                return Scale3r { 0, 0, Real(rgb.r - 0.5) / Sqrt<Real>(rgb.r * (1 - rgb.r)) };
             }
 
-            Int maxc = rgb.get(0) > rgb.get(1) ? (rgb.get(0) > rgb.get(2) ? 0 : 2) : (rgb.get(1) > rgb.get(2) ? 1 : 2);
+            Int maxc = rgb.r > rgb.g ? (rgb.r > rgb.b ? 0 : 2) : (rgb.g > rgb.b ? 1 : 2);
 
             Real z = rgb.get(maxc);
             Real x = rgb.get((maxc + 1) % 3) * (g_rgb_to_spectrum_table_resolution - 1) / z;

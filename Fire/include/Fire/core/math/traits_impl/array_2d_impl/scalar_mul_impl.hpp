@@ -7,27 +7,25 @@ namespace Fire {
     class Array2DScalarMulTraitImpl {
     public:
         TRAIT_API(ScalarMul) static T OpScalarMul(const T &lhs, typename T::Scalar rhs) {
-            T result {};
-            for (SizeT i = 0; i < T::Dims1; i ++) {
-                for (SizeT j = 0; j < T::Dims2; j ++) {
-                    result.set(i, j, lhs.get(i, j) * rhs);
-                }
-            }
-            return result;
+            return InternalOpScalarMul(lhs, rhs, T::IndexSequence);
         }
 
         TRAIT_API(ScalarMul) static T OpScalarDiv(const T &lhs, typename T::Scalar rhs) {
-            return OpScalarMul(lhs, typename T::Scalar { 1 } / rhs);
+            return InternalOpScalarMul(lhs, (typename T::Scalar { 1 }) / rhs, T::IndexSequence);
         }
 
         TRAIT_API(ScalarMul) static T SafeDiv(const T &lhs, typename T::Scalar rhs) {
-            T result {};
-            for (SizeT i = 0; i < T::Dims1; i ++) {
-                for (SizeT j = 0; j < T::Dims2; j ++) {
-                    result.set(i, j, SafeDiv(lhs.get(i, j), rhs));
-                }
-            }
-            return result;
+            return InternalSafeDiv(lhs, rhs, T::IndexSequence);
+        }
+    private:
+        template <ConceptScalarMul T, SizeT ...Indices>
+        static T InternalOpScalarMul(const T &lhs, typename T::Scalar rhs, std::index_sequence<Indices...>) {
+            return T { (lhs.data[Indices] * rhs)... };
+        }
+
+        template <ConceptScalarMul T, SizeT ...Indices>
+        static T InternalSafeDiv(const T &lhs, typename T::Scalar rhs, std::index_sequence<Indices...>) {
+            return T { SafeDiv(lhs.data[Indices], rhs)... };
         }
     };
 }

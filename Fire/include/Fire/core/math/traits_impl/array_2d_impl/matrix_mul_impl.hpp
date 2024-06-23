@@ -6,13 +6,13 @@
 namespace Fire {
     class Array2DMatrixMulTraitImpl {
     public:
-        TRAIT_API_WITH_CONDITIONS(MatrixMul, (T::Dims2 == Y::Dims1), (typename T::template ResizeToT<T::Dims1, Y::Dims2>), , ConceptMatrixMul Y) static OpMul(const T &lhs, const Y &rhs) {
-            using ResultT = typename T::template ResizeToT<T::Dims1, Y::Dims2>;
+        TRAIT_API_WITH_CONDITIONS(MatrixMul, (T::NColumn == Y::NRow), (typename T::template ResizeToT<T::NRow, Y::NColumn>), , ConceptMatrixMul Y) static OpMul(const T &lhs, const Y &rhs) {
+            using ResultT = typename T::template ResizeToT<T::NRow, Y::NColumn>;
             ResultT result {};
-            for (SizeT i = 0; i < ResultT::Dims1; i ++) {
-                for (SizeT j = 0; j < ResultT::Dims2; j ++) {
+            for (SizeT i = 0; i < ResultT::NRow; i ++) {
+                for (SizeT j = 0; j < ResultT::NColumn; j ++) {
                     Real n {};
-                    for (SizeT k = 0; k < T::Dims2; k ++) {
+                    for (SizeT k = 0; k < T::NRow; k ++) {
                         n += lhs.get(i, k) * rhs.get(k, j);
                     }
                     result.set(i, j, n);
@@ -21,28 +21,28 @@ namespace Fire {
             return result;
         }
 
-        TRAIT_API_WITH_CONDITIONS(MatrixMul, (T::Dims2 == Y::Dims1), (typename T::template ResizeToT<T::Dims1, Y::Dims2>), , ConceptMatrixMul Y) static OpDiv(const T &lhs, const Y &rhs) {
+        TRAIT_API_WITH_CONDITIONS(MatrixMul, (T::NColumn == Y::NRow), (typename T::template ResizeToT<T::NRow, Y::NColumn>), , ConceptMatrixMul Y) static OpDiv(const T &lhs, const Y &rhs) {
             return OpMul(Inverse(rhs));
         }
 
-        TRAIT_API_WITH_CONDITIONS(MatrixMul, T::Dims1 == T::Dims2, T) static Inverse(const T &rhs) {
-            if constexpr (T::Dims1 == 2) {
+        TRAIT_API_WITH_CONDITIONS(MatrixMul, T::NRow == T::NColumn, T) static Inverse(const T &rhs) {
+            if constexpr (T::NRow == 2) {
                 return InternalInverse2(rhs);
-            } else if constexpr (T::Dims1 == 3) {
+            } else if constexpr (T::NRow == 3) {
                 return InternalInverse3(rhs);
             }
             return {};
         }
 
-        TRAIT_API_WITH_CONDITIONS(MatrixMul, T::Dims1 == T::Dims2, void) static InverseSelf(T &rhs) {
+        TRAIT_API_WITH_CONDITIONS(MatrixMul, T::NRow == T::NColumn, void) static InverseSelf(T &rhs) {
             rhs = Inverse(rhs);
         }
 
-        TRAIT_API_WITH_CONDITIONS(MatrixMul, T::Dims2 == Y::Dims, typename Y::template ResizeToT<T::Dims1>, , ConceptMatrixMultiplicable Y) static OpMulMultiplicable(const T &lhs, const Y &rhs) {
-            typename Y::template ResizeToT<T::Dims1> result {};
-            for (SizeT i = 0; i < T::Dims1; i++) {
+        TRAIT_API_WITH_CONDITIONS(MatrixMul, T::NColumn == Y::Dims, typename Y::template ResizeToT<T::NRow>, , ConceptMatrixMultiplicable Y) static OpMulMultiplicable(const T &lhs, const Y &rhs) {
+            typename Y::template ResizeToT<T::NRow> result {};
+            for (SizeT i = 0; i < T::NRow; i++) {
                 Real n {};
-                for (SizeT j = 0; j < T::Dims2; j ++) {
+                for (SizeT j = 0; j < T::NColumn; j ++) {
                     n += lhs.get(i, j) * rhs.get(j);
                 }
                 result.set(i, n);
@@ -56,8 +56,8 @@ namespace Fire {
             auto determinant = Det(rhs);
 			Real inv = Real(1) / determinant;
             return {
-                rhs.get(1, 1) * inv, -rhs.get(1, 0) * inv,
-                -rhs.get(0, 1) * inv, rhs.get(0, 0) * inv
+                rhs.m11 * inv, -rhs.m10 * inv,
+                -rhs.m01 * inv, rhs.m00 * inv
             };
         }
 
@@ -67,15 +67,15 @@ namespace Fire {
             auto determinant = Det(rhs);
 			Real inv = Real(1) / determinant;
 
-            result.set(0, 0, DifferenceOfProducts(rhs.get(1, 1), rhs.get(2, 2), rhs.get(2, 1), rhs.get(1, 2)) * inv);
-            result.set(1, 0, DifferenceOfProducts(rhs.get(2, 0), rhs.get(1, 2), rhs.get(1, 0), rhs.get(2, 2)) * inv);
-            result.set(2, 0, DifferenceOfProducts(rhs.get(1, 0), rhs.get(2, 1), rhs.get(2, 0), rhs.get(1, 1)) * inv);
-            result.set(0, 1, DifferenceOfProducts(rhs.get(2, 1), rhs.get(0, 2), rhs.get(0, 1), rhs.get(2, 2)) * inv);
-            result.set(1, 1, DifferenceOfProducts(rhs.get(0, 0), rhs.get(2, 2), rhs.get(2, 0), rhs.get(0, 2)) * inv);
-            result.set(2, 1, DifferenceOfProducts(rhs.get(2, 0), rhs.get(0, 1), rhs.get(0, 0), rhs.get(2, 1)) * inv);
-            result.set(0, 2, DifferenceOfProducts(rhs.get(0, 1), rhs.get(1, 2), rhs.get(1, 1), rhs.get(0, 2)) * inv);
-            result.set(1, 2, DifferenceOfProducts(rhs.get(1, 0), rhs.get(0, 2), rhs.get(0, 0), rhs.get(1, 2)) * inv);
-            result.set(2, 2, DifferenceOfProducts(rhs.get(0, 0), rhs.get(1, 1), rhs.get(1, 0), rhs.get(0, 1)) * inv);
+            result.m00 = DifferenceOfProducts(rhs.m11, rhs.m22, rhs.m21, rhs.m12) * inv;
+            result.m10 = DifferenceOfProducts(rhs.m20, rhs.m12, rhs.m10, rhs.m22) * inv;
+            result.m20 = DifferenceOfProducts(rhs.m10, rhs.m21, rhs.m20, rhs.m11) * inv;
+            result.m01 = DifferenceOfProducts(rhs.m21, rhs.m02, rhs.m01, rhs.m22) * inv;
+            result.m11 = DifferenceOfProducts(rhs.m00, rhs.m22, rhs.m20, rhs.m02) * inv;
+            result.m21 = DifferenceOfProducts(rhs.m20, rhs.m01, rhs.m00, rhs.m21) * inv;
+            result.m02 = DifferenceOfProducts(rhs.m01, rhs.m12, rhs.m11, rhs.m02) * inv;
+            result.m12 = DifferenceOfProducts(rhs.m10, rhs.m02, rhs.m00, rhs.m12) * inv;
+            result.m22 = DifferenceOfProducts(rhs.m00, rhs.m11, rhs.m10, rhs.m01) * inv;
 
             return result;
         }
