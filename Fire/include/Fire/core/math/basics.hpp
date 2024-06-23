@@ -12,6 +12,8 @@ namespace Fire {
 #endif
     using Int = int32_t;
     using SizeT = size_t;
+    using Angle = Real;
+    using Radian = Real;
 
     template <ConceptArithmetic T>
     T SafeDiv(T lhs, T rhs) {
@@ -59,6 +61,9 @@ namespace Fire {
         return result + error;
     }
 
+    inline Real Sin(Radian theta) { return std::sin(theta); }
+    inline Real Cos(Radian theta) { return std::cos(theta); }
+    inline Real Tan(Radian theta) { return std::tan(theta); }
 
     inline Real EvaluatePolynomial(Real t, Real c) { return c; }
 
