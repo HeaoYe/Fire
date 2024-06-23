@@ -13,6 +13,7 @@ namespace Fire {
         using BaseStorage::IndexSequence; \
         template <SizeT NewNRow, SizeT NewNColumn> \
         using ResizeToT = NAME<T, NewNRow, NewNColumn>; \
+        DEFINE_CONSTRUCTORS(NAME) \
 
     DEFINE_UNION_2D(StorageArray2D)
     DEFINE_UNION_2D_IMPL(StorageArray2D, 2, 2, m00, m01, m10, m11)

@@ -27,16 +27,11 @@ namespace Fire {
     template <>
     IMPL_TRAIT(MatrixMultiplicable, XYZ);
 
-    class xyY : public StorageArray1D<Real, 3> {
-        DEFINE_STORAGE_ARRAY_1D_FIXED_SIZE(xyY, Real, 3);
+    class xyY : public StorageArray1D<Real, 2> {
+        DEFINE_STORAGE_ARRAY_1D_FIXED_SIZE(xyY, Real, 2);
     public:
         FIRE_API static xyY FromXYZ(const XYZ &xyz);
     public:
-        xyY() = default;
-        xyY(Real x, Real y, Real Y = 1) {
-            data[0] = x;
-            data[1] = y;
-            data[2] = Y;
-        }
+        Real Y { 1 };
     };
 }

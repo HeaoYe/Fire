@@ -13,6 +13,7 @@ namespace Fire {
             using BaseStorage::IndexSequence; \
             template <SizeT NewDims> \
             using ResizeToT = NAME<T, NewDims>; \
+            DEFINE_CONSTRUCTORS(NAME) \
 
     #define DEFINE_STORAGE_ARRAY_1D_FIXED_SIZE(NAME, T, ...) \
         public: \
@@ -21,6 +22,7 @@ namespace Fire {
             using BaseStorage::IndexSequence; \
             template <SizeT NewDims> \
             using ResizeToT = NAME; \
+            DEFINE_CONSTRUCTORS(NAME) \
 
     DEFINE_UNION_1D(StorageArray1D)
     DEFINE_UNION_1D_IMPL(StorageArray1D, 1, (x), (r))
