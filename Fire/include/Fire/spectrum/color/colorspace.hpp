@@ -26,8 +26,8 @@ namespace Fire {
         const RGBToSpectrumTable<Real> *table;
     };
 
-    extern ColorSpace g_colorspace_sRGB;
-    extern ColorSpace g_colorspace_DCI_P3;
-    extern ColorSpace g_colorspace_Rec2020;
-    extern ColorSpace g_colorspace_ACES2065_1;
+    FIRE_API extern ColorSpace g_colorspace_sRGB;
+    FIRE_API extern ColorSpace g_colorspace_DCI_P3;
+    FIRE_API extern ColorSpace g_colorspace_Rec2020;
+    FIRE_API extern ColorSpace g_colorspace_ACES2065_1;
 }

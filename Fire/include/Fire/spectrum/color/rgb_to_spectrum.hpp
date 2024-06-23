@@ -62,8 +62,8 @@ namespace Fire {
         }
     };
 
-    extern RGBToSpectrumTable<Real> g_precompute_table_sRGB;
-    extern RGBToSpectrumTable<Real> g_precompute_table_DCI_P3;
-    extern RGBToSpectrumTable<Real> g_precompute_table_Rec2020;
-    extern RGBToSpectrumTable<Real> g_precompute_table_ACES2065_1;
+    FIRE_API extern RGBToSpectrumTable<Real> g_precompute_table_sRGB;
+    FIRE_API extern RGBToSpectrumTable<Real> g_precompute_table_DCI_P3;
+    FIRE_API extern RGBToSpectrumTable<Real> g_precompute_table_Rec2020;
+    FIRE_API extern RGBToSpectrumTable<Real> g_precompute_table_ACES2065_1;
 }

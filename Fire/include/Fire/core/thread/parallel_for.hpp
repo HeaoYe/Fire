@@ -7,7 +7,7 @@
 
 namespace Fire {
     template <ConceptIntegral IntType, class CallbackType>
-    FIRE_API TaskPtr ParallelFor(ThreadPool &pool, IntType start, IntType end, CallbackType &&callback) {
+    TaskPtr ParallelFor(ThreadPool &pool, IntType start, IntType end, CallbackType &&callback) {
         TaskPtr main_task = Task::CreateTask([]() {});
         for (IntType i = start; i < end; i ++) {
             TaskPtr task = Task::CreateTask([i, callback_ = std::forward<CallbackType>(callback)]() {
@@ -20,7 +20,7 @@ namespace Fire {
     }
 
     template <ConceptIntegral IntType, class CallbackType>
-    FIRE_API TaskPtr ParallelFor2D(ThreadPool &pool, IntType start_x, IntType end_x, IntType start_y, IntType end_y, CallbackType &&callback) {
+    TaskPtr ParallelFor2D(ThreadPool &pool, IntType start_x, IntType end_x, IntType start_y, IntType end_y, CallbackType &&callback) {
         TaskPtr main_task = Task::CreateTask([]() {});
         for (IntType i = start_x; i < end_x; i ++) {
             for (IntType j = start_y; j < end_y; j ++) {
@@ -35,7 +35,7 @@ namespace Fire {
     }
 
     template <ConceptIntegral IntType, class CallbackType>
-    FIRE_API TaskPtr ParallelFor3D(ThreadPool &pool, IntType start_x, IntType end_x, IntType start_y, IntType end_y, IntType start_z, IntType end_z, CallbackType &&callback) {
+    TaskPtr ParallelFor3D(ThreadPool &pool, IntType start_x, IntType end_x, IntType start_y, IntType end_y, IntType start_z, IntType end_z, CallbackType &&callback) {
         TaskPtr main_task = Task::CreateTask([]() {});
         for (IntType i = start_x; i < end_x; i ++) {
             for (IntType j = start_y; j < end_y; j ++) {

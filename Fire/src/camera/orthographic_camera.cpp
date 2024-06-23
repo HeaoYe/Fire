@@ -4,7 +4,7 @@ namespace Fire {
     OrthographicCamera::OrthographicCamera(std::shared_ptr<Film> film, Real near, Real far, Radian fovy) : ProjectiveCamera(film, far) {
         Real H = Tan(fovy / Real(2)) * near;
         Real W = H * film->getAspect();
-        clip_from_camera = Transform::GenerateOrthographic(near, far, -W, W, -H, H);
+        setProjectiveTransform(Transform::GenerateOrthographic(near, far, -W, W, -H, H));
     }
 
     std::optional<RayPayload> OrthographicCamera::generateRay(const CameraSample &sample) const {

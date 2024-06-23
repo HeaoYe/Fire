@@ -1,8 +1,9 @@
 #include "camera/perspective_camera.hpp"
 
 namespace Fire {
-    PerspectiveCamera::PerspectiveCamera(std::shared_ptr<Film> film, Real near, Real far, Radian fovy, Real focal_distance, Real lens_radius) : ProjectiveCamera(film, far) {
-        clip_from_camera = Transform::GeneratePerspective(near, far, fovy, film->getAspect());
+    PerspectiveCamera::PerspectiveCamera(std::shared_ptr<Film> film, Real near, Real far, Radian fovy, Real focal_distance, Real lens_radius)
+        : ProjectiveCamera(film, far), focal_distance(focal_distance), lens_radius(lens_radius) {
+        setProjectiveTransform(Transform::GeneratePerspective(near, far, fovy, film->getAspect()));
     }
 
     std::optional<RayPayload> PerspectiveCamera::generateRay(const CameraSample &sample) const {
