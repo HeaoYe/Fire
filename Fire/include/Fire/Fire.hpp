@@ -24,3 +24,10 @@
 #include <Fire/spectrum/color/xyz.hpp>
 #include <Fire/spectrum/color/colorspace.hpp>
 #include <Fire/spectrum/color/rgb.hpp>
+
+#include <Fire/camera/ray.hpp>
+#include <Fire/camera/film.hpp>
+#include <Fire/camera/camera.hpp>
+#include <Fire/camera/projective_camera.hpp>
+#include <Fire/camera/orthographic_camera.hpp>
+#include <Fire/camera/perspective_camera.hpp>

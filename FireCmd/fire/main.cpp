@@ -113,6 +113,16 @@ int main() {
 
     FIRE_INFO("{} {} {}", Fire::Sin(Fire::RadianFromAngle(90)), Fire::Sin(Fire::RadianFromAngle(180)), Fire::Sin(Fire::RadianFromAngle(270)));
 
+    auto film = Fire::Film::MakeFilm(1920, 1080);
+    Fire::OrthographicCamera camera_o { film, 0.1, 10, Fire::RadianFromAngle(60) };
+    auto ray_payload = camera_o.generateRay({ { 0.5, 0.55 }, { 0, 0 } });
+    FIRE_INFO("{} {} {}", ray_payload->ray.origin.x, ray_payload->ray.origin.y, ray_payload->ray.origin.z)
+    FIRE_INFO("{} {} {} {}", ray_payload->ray.direction.x, ray_payload->ray.direction.y, ray_payload->ray.direction.z, Length(ray_payload->ray.direction))
+    Fire::PerspectiveCamera camera_p { film, 0.1, 10, Fire::RadianFromAngle(90) };
+    ray_payload = camera_p.generateRay({ { 0.5, 1 }, { 0, 0 } });
+    FIRE_INFO("{} {} {}", ray_payload->ray.origin.x, ray_payload->ray.origin.y, ray_payload->ray.origin.z)
+    FIRE_INFO("{} {} {} {}", ray_payload->ray.direction.x, ray_payload->ray.direction.y, ray_payload->ray.direction.z, Length(ray_payload->ray.direction))
+
     Fire::ColorSpace::Destroy();
     Fire::Illuminants::Destroy();
     Fire::Logger::Destory();
