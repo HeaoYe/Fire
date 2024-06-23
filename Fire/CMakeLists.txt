@@ -1,7 +1,7 @@
 project(Fire)
 
-option(FIRE_BUILD_SHARED OFF)
-option(FIRE_USE_DOUBLE_AS_REAL ON)
+option(FIRE_BUILD_SHARED "构建Fire为动态链接库" OFF)
+option(FIRE_USE_DOUBLE_AS_REAL "使用双精度浮点数作为Fire的实数类型" ON)
 
 set(CMAKE_C_STANDARD 20)
 set(CMAKE_CXX_STANDARD 20)
