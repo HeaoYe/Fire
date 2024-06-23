@@ -111,7 +111,7 @@ int main() {
     FIRE_INFO("{} {} {}", rgb1.r, rgb1.g, rgb1.b);
     FIRE_INFO("{} {} {}", rgb2.r, rgb2.g, rgb2.b);
 
-    FIRE_INFO("{} {} {}", Fire::Sin(3.1415926 * 0.5), Fire::Sin(3.1415926 * 1.0), Fire::Sin(3.1415926 * 1.5));
+    FIRE_INFO("{} {} {}", Fire::Sin(Fire::RadianFromAngle(90)), Fire::Sin(Fire::RadianFromAngle(180)), Fire::Sin(Fire::RadianFromAngle(270)));
 
     Fire::ColorSpace::Destroy();
     Fire::Illuminants::Destroy();

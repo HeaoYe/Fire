@@ -15,6 +15,16 @@ namespace Fire {
     using Angle = Real;
     using Radian = Real;
 
+    constexpr Real PI = 3.141592653589793;
+
+    inline Radian RadianFromAngle(Angle angle) {
+        return (angle / Real(180)) * PI;
+    }
+
+    inline Angle AngleFromRadian(Radian radian) {
+        return (radian / PI) * Real(180);
+    }
+
     template <ConceptArithmetic T>
     T SafeDiv(T lhs, T rhs) {
         if (rhs == 0) {

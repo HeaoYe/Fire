@@ -11,6 +11,8 @@
 namespace Fire {
     class Transform {
     public:
+        Transform() : matrix(Matrix<Real, 4, 4>::GenerateIdentity()), inversed_matrix(Matrix<Real, 4, 4>::GenerateIdentity()) {}
+
         Transform(const Matrix<Real, 4, 4> &matrix) : matrix(matrix) {
             inversed_matrix = Inverse(matrix);
         }
