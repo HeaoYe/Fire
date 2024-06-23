@@ -8,6 +8,7 @@
 
 #include <Fire/core/math/basics.hpp>
 #include <Fire/core/math/types/types.hpp>
+#include <Fire/core/math/rounds/compensated_float.hpp>
 
 #include <Fire/spectrum/basics.hpp>
 #include <Fire/spectrum/distributions/constant_spectrum_distribution.hpp>
