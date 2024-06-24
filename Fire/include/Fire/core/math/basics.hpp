@@ -49,13 +49,13 @@ namespace Fire {
     }
 
     template <ConceptArithmetic T>
-    T Lerp(T a, T b, T t) {
-        return a * (1 - t) + b * t;
+    T FMA(T a, T b, T c) {
+        return a * b + c;
     }
 
     template <ConceptArithmetic T>
-    T FMA(T a, T b, T c) {
-        return a * b + c;
+    T Lerp(T a, T b, T t) {
+        return FMA(t, (b - a), a);
     }
 
     template <ConceptIntegral T>
