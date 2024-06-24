@@ -51,10 +51,10 @@
     constexpr NAME(NAME &&rhs) { \
         std::copy(rhs.data, rhs.data + IndexSequence.size(), data); \
     } \
-    constexpr NAME(const BaseStorage &rhs) { \
+    explicit constexpr NAME(const BaseStorage &rhs) { \
         std::copy(rhs.data, rhs.data + IndexSequence.size(), data); \
     } \
-    constexpr NAME(BaseStorage &&rhs) { \
+    explicit constexpr NAME(BaseStorage &&rhs) { \
         std::copy(rhs.data, rhs.data + sizeof(data) / sizeof(Scalar), data); \
     } \
     constexpr NAME(std::initializer_list<Scalar> list) { \

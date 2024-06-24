@@ -16,6 +16,10 @@ namespace Fire {
         return INVOKE_TRAIT_IMPL(MatrixMul, OpDiv, lhs, rhs);
     }
 
+    TRAIT_API_WITH_CONDITIONS(MatrixMul, T::NColumn == Y::NRow, (typename T::template ResizeToT<T::NRow, Y::NColumn>), , ConceptMatrixMul Y) SafeDiv(const T &lhs, const Y &rhs) {
+        static_assert(false, "矩阵不支持SafeDiv");
+    }
+
     TRAIT_API_WITH_CONDITIONS(MatrixMul, T::NRow == T::NColumn, T) Inverse(const T &rhs) {
         return INVOKE_TRAIT_IMPL(MatrixMul, Inverse, rhs);
     }

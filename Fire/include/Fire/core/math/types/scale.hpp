@@ -4,24 +4,24 @@
 #include <Fire/core/math/traits/ring.hpp>
 
 namespace Fire {
-    template <ConceptArithmetic T, size_t N>
+    template <ConceptArithmetic T, SizeT N>
     struct Scale : public StorageArray1D<T, N> {
         DEFINE_STORAGE_ARRAY_1D(Scale, T, N)
     };
 
-    template <ConceptArithmetic T, size_t N>
+    template <ConceptArithmetic T, SizeT N>
     IMPL_TRAIT(Add, Scale<T, N>)
 
-    template <ConceptArithmetic T, size_t N>
+    template <ConceptArithmetic T, SizeT N>
     IMPL_TRAIT(Mul, Scale<T, N>)
 
-    template <ConceptArithmetic T, size_t N>
+    template <ConceptArithmetic T, SizeT N>
     IMPL_TRAIT(ScalarMul, Scale<T, N>)
 
-    template <ConceptArithmetic T, size_t N>
+    template <ConceptArithmetic T, SizeT N>
     IMPL_TRAIT(Linear, Scale<T, N>)
 
-    template <ConceptArithmetic T, size_t N>
+    template <ConceptArithmetic T, SizeT N>
     IMPL_TRAIT(Ring, Scale<T, N>)
 
     template <class T, ConceptArithmetic Y, SizeT ...Indices>
@@ -34,27 +34,27 @@ namespace Fire {
         return T { static_cast<typename T::Scalar>(SafeDiv<Real>(lhs.template get<Indices>(), rhs.template get<Indices>()))... };
     }
 
-    TRAIT_API(ScalarMul, , ConceptArithmetic Y) T operator*(const T &lhs, const Scale<Y, T::Dims> &rhs) {
+    TRAIT_API_WITH_CONDITIONS(ScalarMul, (!std::is_same_v<T, Scale<Y, T::Dims>>), T, , ConceptArithmetic Y) operator*(const T &lhs, const Scale<Y, T::Dims> &rhs) {
         return __InternalOpScaleMul(lhs, rhs, T::IndexSequence);
     }
 
-    TRAIT_API(ScalarMul, , ConceptArithmetic Y) T operator*(const Scale<Y, T::Dims> &lhs, const T &rhs) {
+    TRAIT_API_WITH_CONDITIONS(ScalarMul, (!std::is_same_v<T, Scale<Y, T::Dims>>), T, , ConceptArithmetic Y) operator*(const Scale<Y, T::Dims> &lhs, const T &rhs) {
         return __InternalOpScaleMul(rhs, lhs, T::IndexSequence);
     }
 
-    TRAIT_API(ScalarMul, , ConceptArithmetic Y) void operator*=(T &lhs, const Scale<Y, T::Dims> &rhs) {
+    TRAIT_API_WITH_CONDITIONS(ScalarMul, (!std::is_same_v<T, Scale<Y, T::Dims>>), void, , ConceptArithmetic Y) operator*=(T &lhs, const Scale<Y, T::Dims> &rhs) {
         lhs = lhs * rhs;
     }
 
-    TRAIT_API(ScalarMul, , ConceptArithmetic Y) T operator/(const T &lhs, const Scale<Y, T::Dims> &rhs) {
+    TRAIT_API_WITH_CONDITIONS(ScalarMul, (!std::is_same_v<T, Scale<Y, T::Dims>>), T, , ConceptArithmetic Y) operator/(const T &lhs, const Scale<Y, T::Dims> &rhs) {
         return __InternalOpScaleMul(lhs, Inverse(rhs), T::IndexSequence);
     }
 
-    TRAIT_API(ScalarMul, , ConceptArithmetic Y) void operator/=(T &lhs, const Scale<Y, T::Dims> &rhs) {
+    TRAIT_API_WITH_CONDITIONS(ScalarMul, (!std::is_same_v<T, Scale<Y, T::Dims>>), void, , ConceptArithmetic Y) operator/=(T &lhs, const Scale<Y, T::Dims> &rhs) {
         lhs = lhs / rhs;
     }
 
-    TRAIT_API(ScalarMul, , ConceptArithmetic Y) T SafeDiv(const T &lhs, const Scale<Y, T::Dims> &rhs) {
+   TRAIT_API_WITH_CONDITIONS(ScalarMul, (!std::is_same_v<T, Scale<Y, T::Dims>>), T, , ConceptArithmetic Y) SafeDiv(const T &lhs, const Scale<Y, T::Dims> &rhs) {
         return __InternalSafeDiv(lhs, rhs, T::IndexSequence);
     }
 }

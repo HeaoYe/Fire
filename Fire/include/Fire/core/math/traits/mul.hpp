@@ -21,6 +21,10 @@ namespace Fire {
         lhs = lhs / rhs;
     }
 
+    TRAIT_API(Mul) T SafeDiv(const T &lhs, const T &rhs) {
+        return INVOKE_TRAIT_IMPL(Mul, OpSafeDiv, lhs, rhs);
+    }
+
     TRAIT_API(Mul) T Inverse(const T &rhs) {
         return INVOKE_TRAIT_IMPL(Mul, Inverse, rhs);
     }

@@ -18,8 +18,8 @@ namespace Fire {
         Real roll { 0 }, pitch { 0 };
     private:
         Real far;  // only using by cameraFromFilm()
-        Transform render_from_world;
-        Transform camera_from_world;
-        Transform clip_from_camera;
+        Transform render_from_world {};
+        Transform camera_from_world {};
+        Transform clip_from_camera {};
     };
 }

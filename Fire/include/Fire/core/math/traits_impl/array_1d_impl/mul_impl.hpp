@@ -23,6 +23,10 @@ namespace Fire {
                 rhs.set(i, (typename T::Scalar { 1 }) / rhs.get(i));
             }
         }
+
+        TRAIT_API(Mul) static T SafeDiv(const T&lhs, const T &rhs) {
+            return InternalOpSafeDiv(lhs, rhs);
+        }
     private:
         template <ConceptMul T, SizeT ...Indices>
         static T InternalOpMul(const T &lhs, const T &rhs, std::index_sequence<Indices...>) {
@@ -32,6 +36,11 @@ namespace Fire {
         template <ConceptMul T, SizeT ...Indices>
         static T InternalOpDiv(const T &lhs, const T &rhs, std::index_sequence<Indices...>) {
             return T { (lhs.template get<Indices>() / rhs.template get<Indices>())... };
+        }
+
+        template <ConceptMul T, SizeT ...Indices>
+        static T InternalOpSafeDiv(const T &lhs, const T &rhs, std::index_sequence<Indices...>) {
+            return T { SafeDiv(lhs.template get<Indices>(), rhs.template get<Indices>())... };
         }
 
         template <ConceptMul T, SizeT ...Indices>
