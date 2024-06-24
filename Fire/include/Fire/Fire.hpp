@@ -22,6 +22,7 @@
 #include <Fire/spectrum/color/illuminants.hpp>
 #include <Fire/spectrum/color/rgb_to_spectrum.hpp>
 #include <Fire/spectrum/color/xyz.hpp>
+#include <Fire/spectrum/color/lms.hpp>
 #include <Fire/spectrum/color/colorspace.hpp>
 #include <Fire/spectrum/color/rgb.hpp>
 

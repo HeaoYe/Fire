@@ -1,7 +1,9 @@
 #include "spectrum/color/xyz.hpp"
+#include "spectrum/color/lms.hpp"
 #include "spectrum/color/cie_matching_curves.hpp"
 #include "spectrum/color/rgb.hpp"
 #include "spectrum/color/colorspace.hpp"
+#include "core/math/types/scale.hpp"
 
 namespace Fire {
     XYZ XYZ::FromSpectrumDistribution(const SpectrumDistribution &spectrum_distribution) {
@@ -31,8 +33,19 @@ namespace Fire {
         return XYZ { colorspace.getXYZFromRGB() * rgb };
     }
 
+    XYZ XYZ::FromLMS(const LMS &lms) {
+        return XYZ { LMS::GetXYZFromLMSMatrix() * lms };
+    }
+
     xyY xyY::FromXYZ(const XYZ &xyz) {
         Real sum = xyz.x + xyz.y + xyz.z;
         return xyY { xyz.x / sum, xyz.y / sum, xyz.y };
+    }
+
+    Matrix3r xyY::WhiteBalance(const xyY &src, const xyY &dst) {
+        Scale3r src_lms = Scale3r { LMS::FromxyY(src) };
+        Scale3r dst_lms = Scale3r { LMS::FromxyY(dst) };
+        auto tansform_matrix = Matrix3r::GenerateDiag(dst_lms / src_lms);
+        return LMS::GetXYZFromLMSMatrix() * tansform_matrix * LMS::GetLMSFromXYZMatrix();
     }
 }
