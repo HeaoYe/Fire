@@ -124,6 +124,33 @@ int main() {
     FIRE_INFO("{} {} {}", ray_payload->ray.origin.x, ray_payload->ray.origin.y, ray_payload->ray.origin.z)
     FIRE_INFO("{} {} {} {}", ray_payload->ray.direction.x, ray_payload->ray.direction.y, ray_payload->ray.direction.z, Length(ray_payload->ray.direction))
 
+    Fire::PixelSensor pix_s1 { Fire::g_cie_x_matching_function, Fire::g_cie_y_matching_function, Fire::g_cie_z_matching_function, Fire::g_colorspace_sRGB, Fire::g_cie_illuminant_D5000, 1. / Fire::g_cie_y_integral };
+    Fire::PixelSensor pix_s2 { Fire::g_colorspace_sRGB, Fire::g_cie_illuminant_D5000, 1. / Fire::g_cie_y_integral };
+    Fire::PixelSensor pix_s3 { Fire::g_colorspace_sRGB, 1. / Fire::g_cie_y_integral };
+
+    auto sample_illum_d5000 = Fire::SpectrumSample::FromSpectrumDistribution(Fire::g_cie_illuminant_D5000, wavelengths_sample);
+
+    auto rgb_sensor_d5000_1 = pix_s1.measureRadiance(sample_illum_d5000);
+    auto rgb_sensor_d5000_2 = pix_s2.measureRadiance(sample_illum_d5000);
+    auto rgb_sensor_3 = pix_s3.measureRadiance(sample_illum);
+
+    auto xyz_sensor_d5000_1 = pix_s1.XYZFromSensorRGB(rgb_sensor_d5000_1);
+    auto xyz_sensor_d5000_2 = pix_s2.XYZFromSensorRGB(rgb_sensor_d5000_2);
+    auto xyz_sensor_3 = pix_s3.XYZFromSensorRGB(rgb_sensor_3);
+
+    auto srgb_rgb_illum = Fire::RGB::FromSpectrumSample(Fire::g_colorspace_sRGB, sample_illum);
+    auto srgb_rgb_illum_d5000 = Fire::RGB::FromSpectrumSample(Fire::g_colorspace_sRGB, sample_illum_d5000);
+
+    auto srgb_rgb_sensor_d5000_1 = Fire::RGB::FromXYZ(Fire::g_colorspace_sRGB, xyz_sensor_d5000_1);
+    auto srgb_rgb_sensor_d5000_2 = Fire::RGB::FromXYZ(Fire::g_colorspace_sRGB, xyz_sensor_d5000_2);
+    auto srgb_rgb_sensor_3 = Fire::RGB::FromXYZ(Fire::g_colorspace_sRGB, xyz_sensor_3);
+
+    FIRE_INFO("{} {} {}", srgb_rgb_illum.r, srgb_rgb_illum.g, srgb_rgb_illum.b)
+    FIRE_INFO("{} {} {}", srgb_rgb_illum_d5000.r, srgb_rgb_illum_d5000.g, srgb_rgb_illum_d5000.b)
+    FIRE_INFO("{} {} {}", srgb_rgb_sensor_d5000_1.r, srgb_rgb_sensor_d5000_1.g, srgb_rgb_sensor_d5000_1.b)
+    FIRE_INFO("{} {} {}", srgb_rgb_sensor_d5000_2.r, srgb_rgb_sensor_d5000_2.g, srgb_rgb_sensor_d5000_2.b)
+    FIRE_INFO("{} {} {}", srgb_rgb_sensor_3.r, srgb_rgb_sensor_3.g, srgb_rgb_sensor_3.b)
+
     Fire::ColorSpace::Destroy();
     Fire::Illuminants::Destroy();
     Fire::Logger::Destory();

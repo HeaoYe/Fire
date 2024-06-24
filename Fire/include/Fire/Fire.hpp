@@ -27,6 +27,7 @@
 #include <Fire/spectrum/color/rgb.hpp>
 
 #include <Fire/camera/ray.hpp>
+#include <Fire/camera/pixel_sensor.hpp>
 #include <Fire/camera/film.hpp>
 #include <Fire/camera/camera.hpp>
 #include <Fire/camera/projective_camera.hpp>

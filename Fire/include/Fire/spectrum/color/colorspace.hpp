@@ -18,6 +18,7 @@ namespace Fire {
         const Matrix3r &getRGBFromXYZ() const { return rgb_from_xyz; }
         const SpectrumDistribution &getIllumiant() const { return *illuminant; }
         const RGBToSpectrumTable<Real> &getRGBToSpectrumTable() const { return *table; }
+        xyY getW() const { return w; }
     private:
         xyY r, g, b, w;
         Matrix3r xyz_from_rgb;
