@@ -34,7 +34,7 @@ namespace Fire {
             } else if constexpr (T::NRow == 4) {
                 return InternalInverse4(rhs);
             }
-            return {};
+            return InternalInverseGeneral(rhs);
         }
 
         TRAIT_API_WITH_CONDITIONS(MatrixMul, T::NRow == T::NColumn, void) static InverseSelf(T &rhs) {
@@ -137,6 +137,76 @@ namespace Fire {
                 s * static_cast<Real>(CompensatedFloat::InnerProduct(-rhs.m30, s3, rhs.m31, s1, -rhs.m32, s0)),
                 s * static_cast<Real>(CompensatedFloat::InnerProduct(rhs.m20, s3, rhs.m22, s0, -rhs.m21, s1))
             };
+        }
+
+        template <ConceptMatrixMul T>
+        static T InternalInverseGeneral(const T &rhs) {
+            Int indxc[T::NRow], indxr[T::NRow];
+            Int ipiv[T::NRow] = {0};
+            Real minv[T::NRow][T::NRow];
+            for (Int i = 0; i < T::NRow; i ++) {
+                for (Int j = 0; j < T::NRow; j ++) {
+                    minv[i][j] = rhs.get(i, j);
+                }
+            }
+            for (Int i = 0; i < T::NRow; i ++) {
+                Int irow = 0, icol = 0;
+                Real big = 0.f;
+                for (Int j = 0; j < T::NRow; j ++) {
+                    if (ipiv[j] != 1) {
+                        for (Int k = 0; k < T::NRow; k ++) {
+                            if (ipiv[k] == 0) {
+                                if (std::abs(minv[j][k]) >= big) {
+                                    big = std::abs(minv[j][k]);
+                                    irow = j;
+                                    icol = k;
+                                }
+                            } else if (ipiv[k] > 1) {
+                                return {};
+                            }
+                        }
+                    }
+                }
+                ipiv[icol] ++;
+                if (irow != icol) {
+                    for (Int k = 0; k < T::NRow; k ++) {
+                        std::swap(minv[irow][k], minv[icol][k]);
+                    }
+                }
+                indxr[i] = irow;
+                indxc[i] = icol;
+                if (minv[icol][icol] == 0.f) {
+                    return {};
+                }
+                Real pivinv = 1. / minv[icol][icol];
+                minv[icol][icol] = 1.;
+                for (Int j = 0; j < T::NRow; j ++) {
+                    minv[icol][j] *= pivinv;
+                }
+                for (Int j = 0; j < T::NRow; j ++) {
+                    if (j != icol) {
+                        Real save = minv[j][icol];
+                        minv[j][icol] = 0;
+                        for (Int k = 0; k < T::NRow; k ++) {
+                            minv[j][k] = FMA(-minv[icol][k], save, minv[j][k]);
+                        }
+                    }
+                }
+            }
+            for (Int j = T::NRow - 1; j >= 0; j --) {
+                if (indxr[j] != indxc[j]) {
+                    for (Int k = 0; k < T::NRow; k ++) {
+                        std::swap(minv[k][indxr[j]], minv[k][indxc[j]]);
+                    }
+                }
+            }
+            T result {};
+            for (Int i = 0; i < T::NRow; i ++) {
+                for (Int j = 0; j < T::NRow; j ++) {
+                    result.set(i, j, minv[i][j]);
+                }
+            }
+            return result;
         }
     };
 }

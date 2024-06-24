@@ -56,4 +56,12 @@ namespace Fire {
 
     template <ConceptArithmetic T, SizeT N, SizeT M>
     IMPL_TRAIT(Ring, Matrix<T, N, M>)
+
+    TRAIT_API_WITH_CONDITIONS(MatrixMul, ((T::NRow == Y::NRow) && (T::NColumn == Y::NColumn)), (typename T::template ResizeToT<T::NColumn, T::NColumn>), , ConceptMatrixMul Y)
+    LinearLeastSquares(const T &x, const Y &y) {
+        auto xT = Transpose(x);
+        auto xTxI = Inverse(xT * x);
+        auto xTy = xT * y;
+        return Transpose(xTxI * xTy);
+    }
 }
