@@ -10,6 +10,7 @@ namespace Fire {
     class WavelengthsSample {
     public:
         FIRE_API static WavelengthsSample GenerateUniformSample(Real u, Real lambda_min = g_lambda_min, Real lambda_max = g_lambda_max);
+        FIRE_API static WavelengthsSample GenerateVisibleSample(Real u);
     public:
         Int getSampleCount () const { return g_spectrum_sample_count; }
 

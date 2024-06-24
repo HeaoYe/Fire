@@ -85,7 +85,8 @@ int main() {
     auto res4 = mat * vec4_3;
     Fire::Point3r res5 { res4 };
 
-    auto wavelengths_sample = Fire::WavelengthsSample::GenerateUniformSample(0.2);
+    // auto wavelengths_sample = Fire::WavelengthsSample::GenerateUniformSample(0.2);
+    auto wavelengths_sample = Fire::WavelengthsSample::GenerateVisibleSample(0.2);
     Fire::ConstantSD csd { 1 };
     auto ss = Fire::SpectrumSample::FromSpectrumDistribution(csd, wavelengths_sample);
     ss.value += ss.value;
